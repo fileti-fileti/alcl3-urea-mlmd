@@ -14,6 +14,43 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-24 — sdumont — Setup-check fail diagnosed; thermostat check inconclusive (A holds)
+- Goal: find the cause of the setup-check fail before the pilot.
+- Done:
+  - Push of `252340d`, `3540181`, `f669c2c` (the previous session's push had not run).
+  - Diagnosis, read-only (session scratchpad scripts; Davi's run dir read, not changed):
+    same `init.xyz` potential energy in both runs (−89435.083640 vs −89435.083638 eV);
+    model N-H curvature 40.5–41.9 eV/Å² in four frames, expected spread at 400 K
+    0.0289–0.0294 Å; Davi's driver (`aimd_replay.py`, `f2b50475cb51`) uses the same
+    `ase.md.bussi.Bussi` + `FixCom` in production; AIMD N-H peak 111.2 between Davi's MLMD
+    104.8 and ours 118.7 (owner's ok to read Davi's AIMD RDF copy).
+  - `9e87a3f`: stage kinds `massive_ou` and `nve` in `src/mlmd.py` (+3 tests),
+    `src/bond_width.py` (+2 tests), thermostat check doc with its rule and 4 configs;
+    79 tests OK with the venv.
+  - Thermostat check jobs 11758819 (A, Bussi), 11758820 (B, NVE), 11758821 (C, massive_ou):
+    COMPLETED 0:0, 871–903 s; ledger 25.6461 + 26.5000 + 26.5883 UA. Job 11758822 (D,
+    Bussi at 0.25 fs) running at the end of the session.
+- Results: thermostat check **inconclusive** by its fixed rule: A holds (last-ps N-H spread
+  0.0280 Å ≥ 0.0275), B 0.0304, C 0.0293; all starts 0.0296 Å
+  (`docs/experiments/thermostat-check-r10neut-T400.md`). Davi's cooling is not reproduced;
+  with his equilibration, our global-Bussi production keeps the expected spread.
+- Decisions (owner, 2026-11-24, "ok para tudo"): push; thermostat check A–D with the two new
+  stage kinds; reading Davi's AIMD RDF copy.
+- Problems:
+  - In this interactive shell `LD_LIBRARY_PATH` starts with `mace_env/lib` (from the profile)
+    and `module load` is unavailable, so the venv's python loaded conda's libpython and
+    `import mace` failed (pandas/platform). Fix used: `env -i HOME=$HOME USER=$USER TERM=dumb
+    bash -l -c "module purge; module load python/3.10.16_sequana; ..."`. Jobs are not
+    affected (`--export=NONE`, `module purge`).
+  - Writes to the session scratchpad fail from that clean login shell; outputs went to the
+    run dirs.
+  - A's N-H spread dips to 0.0265 Å in block 3 and returns: 1 ps block values fluctuate more
+    than the rule's threshold assumed. B (NVE) heats to 467.84 K mean as the start relaxes:
+    a weaker control than planned.
+- Next: owner's ok on run A as the setup-check repeat (RDF + `rdf_compare.py`, the
+  setup-check rule); D's numbers; the pilot's equilibration thermostat (proposal:
+  `massive_ou` for the ramp); register both checks' outputs.
+
 ## 2026-11-24 — sdumont — Smoke passes, setup check fails, pilot phase 1 prepared
 - Goal: read the smoke + bench; run the setup check; set up the pilot's first 200 ps.
 - Done:

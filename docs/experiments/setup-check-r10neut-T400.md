@@ -64,3 +64,7 @@ production thermo file:
   the high-frequency modes only slowly. The low mean temperature fits a heat sink still
   being filled. Candidate fix (owner's decision): a per-atom thermostat (ASE Langevin) for
   the equilibration, then this check again as a new version.
+- Follow-up (2026-11-24): `thermostat-check-r10neut-T400.md`. Davi's reference is itself not
+  stationary (its N-H spread falls during his production); with Davi's equilibration our
+  global-Bussi production keeps the expected spread (inconclusive by that test's rule, which
+  asks for this check to be repeated with that equilibration).
