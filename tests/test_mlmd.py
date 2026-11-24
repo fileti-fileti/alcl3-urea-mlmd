@@ -147,6 +147,30 @@ class TestMLMD(unittest.TestCase):
         steps = [int(r.split(",")[0]) for r in (b / "npt.thermo.csv").read_text().splitlines()[1:]]
         self.assertEqual(steps, list(range(0, 61, 10)))
 
+    def test_extend_after_done_equals_planned(self):
+        # Extension (docs/experiments/pilot-r10-T400.md): a stage added after DONE continues
+        # from the last final.traj with its velocities and RNG state, as if planned.
+        import numpy as np
+        from ase.io import read
+        cfg = self.config()
+        prod2 = dict(cfg["stages"][-1], name="prod2")
+        planned = self.rundir("a", dict(cfg, stages=cfg["stages"] + [prod2]))
+        ext = self.rundir("b", cfg)
+        self.assertEqual(self.run_(planned), 0)
+        self.assertEqual(self.run_(ext), 0)
+        c = json.loads((ext / "run.json").read_text())
+        c["stages"].append(prod2)
+        (ext / "run.json").write_text(json.dumps(c))
+        (ext / "DONE").unlink()
+        self.assertEqual(self.run_(ext), 0)
+        fa, fb = read(str(planned / "prod2.final.traj")), read(str(ext / "prod2.final.traj"))
+        self.assertTrue(np.allclose(fa.positions, fb.positions, atol=1e-8))
+        self.assertTrue(np.allclose(fa.get_momenta(), fb.get_momenta(), atol=1e-8))
+        self.assertEqual(self.frames(ext / "prod2.xyz"), list(range(0, 101, 10)))
+        p_last = read(str(ext / "prod.xyz"), index=-1).positions
+        p_first = read(str(ext / "prod2.xyz"), index=0).positions
+        self.assertTrue(np.allclose(p_last, p_first, atol=1e-7))   # junction frame repeated
+
     def test_npt_box_scaled_to_mean_volume(self):
         from ase.io import read
         d = self.rundir("a", self.config())

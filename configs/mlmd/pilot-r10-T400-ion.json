@@ -1,0 +1,59 @@
+{
+ "description": "Pilot r = 1.0, 400 K, ionic start ([AlCl2(urea)2]+ + AlCl4-): phase 1, production 0-200 ps (exploration, not judged); docs/experiments/pilot-r10-T400.md.",
+ "model": {
+  "path": "data/models/run2r10m0/alcl3_urea_run2_r10_m0.model",
+  "sha256": "ff0e4578c01cd5ba8d6f08ba35eda9ad27e8d580f50f9085c37222485fd46e3a"
+ },
+ "dtype": "float32",
+ "structure": {
+  "path": "data/boxes/mlmd-boxes-r1.0-v2/r1.0_ionico.pdb",
+  "box_A": 29.729979
+ },
+ "seed": 2,
+ "min_distance_A": 0.6,
+ "check_every": 20,
+ "ckpt_every": 2000,
+ "stages": [
+  {
+   "name": "min",
+   "kind": "minimise",
+   "fmax_eV_A": 0.05,
+   "max_steps": 2000
+  },
+  {
+   "name": "ramp",
+   "kind": "nvt",
+   "dt_fs": 0.25,
+   "ps": 2.0,
+   "T_start_K": 100,
+   "T_K": 400,
+   "taut_fs": 10,
+   "thermo_every": 40,
+   "dump_every": 200
+  },
+  {
+   "name": "npt",
+   "kind": "npt_berendsen",
+   "dt_fs": 0.5,
+   "ps": 50.0,
+   "T_K": 400,
+   "taut_fs": 100,
+   "P_bar": 1.0,
+   "taup_fs": 1000,
+   "compressibility_per_bar": 4.5e-05,
+   "mean_volume_last_ps": 25.0,
+   "thermo_every": 20,
+   "dump_every": 200
+  },
+  {
+   "name": "prod",
+   "kind": "nvt",
+   "dt_fs": 0.5,
+   "ps": 200.0,
+   "T_K": 400,
+   "taut_fs": 100,
+   "thermo_every": 20,
+   "dump_every": 20
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 # 0016. Short NPT to relax the start-box pressure with a stress-free model
-- Status: Accepted (protocol, NPT length). Barostat and its other parameters: Proposed,
-  pending the owner's ok.
+- Status: Accepted (protocol, NPT length). Barostat and its other parameters: Accepted
+  2026-11-24 (owner's "ok" on the pilot protocol, `docs/experiments/pilot-r10-T400.md`).
 - Date: 2026-11-24. Decided by: owner (Eudes Fileti). Process: ADR-0013.
 
 ## Context
@@ -19,7 +19,7 @@ equilibrated. The agent had flagged NPT as unsupported by this model.
 - NPT length: 50 ps (owner).
 - The end density is recorded next to 1.5398 g/cm³ (experimental, 333 K, the density of
   the training data) but is not a gate (owner: density is less relevant).
-- Proposed by the agent, TODO(owner): ok: ASE `NPTBerendsen` (weak coupling relaxes the
+- Proposed by the agent, owner's ok 2026-11-24: ASE `NPTBerendsen` (weak coupling relaxes the
   pressure without sampling the NPT ensemble, which is all this stage needs), isotropic,
   the box stays cubic; target 1 bar; compressibility 4.5e-5 bar⁻¹ (order of magnitude of a
   molecular liquid; with Berendsen it only sets the relaxation rate); coupling time 1 ps;
