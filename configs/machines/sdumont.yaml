@@ -6,12 +6,13 @@ hostnames:
   - "sdumont[0-9]*"   # login nodes sdumont17/sdumont18 seen; TODO(owner): compute-node hostnames
 scheduler: slurm
 cost:
-  unit: unknown       # TODO(owner): allocation unit and conversion from sacct (ADR-0005)
+  unit: unknown       # LNCC bills UA: 1 per CPU core-hour, 100 per GPU-hour (manual §06, as quoted in
+                      # Davi's hpc-guide, 2026-10); ledger conversion not implemented yet (ADR-0005)
   source: sacct
 storage:
   repo_parent: /scratch/acmes/eudes.fileti3/projects    # clone in /scratch (ADR-0014); $HOME=/prj/acmes/eudes.fileti3
   store_parent: /scratch/acmes/eudes.fileti3/projects   # owner-reported area; unknown purge accepted (ADR-0012)
-  purge: unknown                                    # TODO(owner): /scratch purge rule (LNCC)
+  purge: 60 days unmodified                         # LNCC; quoted in Davi's hpc-guide (2026-10); no backup
   notes: "$HOME=/prj/acmes/eudes.fileti3 (NFS, 250G); /scratch Lustre; login ulimit -t 1800"
 partitions:           # account acmes on all eight (sacctmgr, 2026-11-17); max wall per job (assoc):
                       # *_dev 00:20:00, sequana_cpu/_gpu/_cpu_bigmem 4-00:00:00, *_long 31-00:00:00
@@ -35,5 +36,7 @@ modules:
                       # needs mace_env/lib and shared/software/libtorch-gpu/lib in LD_LIBRARY_PATH (owner's earlier LAMMPS jobs)
 python:
   conda_sh: /scratch/acmes/eudes.fileti3/miniconda3/etc/profile.d/conda.sh   # used by the owner's earlier GPU jobs
+  module: python/3.10.16_sequana   # base of the venvs; load it at run time and unset PYTHONPATH
   envs:
     - /scratch/acmes/eudes.fileti3/projects/shared/envs/mace_env   # owner-reported; untouchable
+    - /scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env   # venv: mace-torch 0.3.16, torch 2.11.0+cu126 (envs/)

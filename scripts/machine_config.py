@@ -39,7 +39,7 @@ SCHEMA = {
     "partitions": [str],
     "toy_job_partition": str,
     "modules": {"cp2k": str, "gromacs": str, "lammps": str},
-    "python": {"conda_sh": str, "envs": [str]},
+    "python": {"conda_sh": str, "module": str, "envs": [str]},
 }
 ALLOWED = {"scheduler": {"slurm"}, "cost.source": {"sacct", UNKNOWN}}
 

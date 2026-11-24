@@ -24,6 +24,7 @@ modules:
   lammps: unknown     # TODO(owner): production LAMMPS module
 python:
   conda_sh: /home/eudes/miniforge3/etc/profile.d/conda.sh
+  module: unknown
   envs:               # existing, untouchable (ADR-0007); jobs activate one explicitly
     - base
     - analysis
