@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import machine_config as mc  # noqa: E402
 
 DEFAULT_REPO = Path(__file__).resolve().parent.parent
-NAME_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
+NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")   # runs/<exp>-r<NN>-T<T>-<start> (CLAUDE.md)
 TIME_RE = re.compile(r"^(?:(\d+)-)?(\d{1,2}):(\d{2}):(\d{2})$")
 
 JOB = """#!/bin/bash -l
@@ -101,7 +101,7 @@ def prepare(repo, config, name, partition="sequana_gpu", time="1-00:00:00", cpus
             max_chain=30, exclude="", env=None, margin_s=600, machine=None, now=None):
     repo = Path(repo).absolute()
     if not NAME_RE.match(name):
-        raise PrepError("--name {!r}: use [a-z0-9._-]".format(name))
+        raise PrepError("--name {!r}: use [A-Za-z0-9._-]".format(name))
     machine = machine or mc.detect(repo)
     if not machine:
         raise PrepError("machine not detected (configs/machines/)")

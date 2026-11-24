@@ -75,6 +75,12 @@ class TestPrepMLMD(unittest.TestCase):
         with self.assertRaises(pm.PrepError):
             self.prep(name="r5")
 
+    def test_run_name(self):
+        self.assertTrue(self.prep(name="pilot-r10-T400-reag").is_dir())   # CLAUDE.md convention
+        for bad in ("../x", "a/b", "-x", "a b"):
+            with self.assertRaises(pm.PrepError):
+                self.prep(name=bad)
+
     def test_wrong_model_sha(self):
         cfg = dict(self.cfg, model={"path": "inputs/m.model", "sha256": "0" * 64})
         (self.t.repo / "configs" / "c.json").write_text(json.dumps(cfg))
