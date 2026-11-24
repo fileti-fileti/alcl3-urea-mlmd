@@ -1,0 +1,442 @@
+{
+  "name": "legacy-mlmd-rdf-run2r10m0",
+  "registered_at": "2026-11-24T13:16:48+00:00",
+  "machine": "sdumont",
+  "hostname": "sdumont17",
+  "repo_commit": "unknown",
+  "source_dir": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model",
+  "patterns": [
+    "LEIA-ME.md",
+    "rdf/*.csv",
+    "rdf/*.json"
+  ],
+  "files": [
+    {
+      "path": "LEIA-ME.md",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/LEIA-ME.md",
+      "sha256": "49fc08c2a65cb09766751ba108ca054a7ba4c885345c9fc307fb4628387488b0",
+      "bytes": 5305,
+      "source_mtime": "2026-11-19T20:19:30+00:00"
+    },
+    {
+      "path": "rdf/r10_fora.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_fora.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "a8d145eab1aa8465e0d39b33d09b44ac30858d9ec2fb9b232b24c27d06a34d04",
+      "bytes": 141736,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_fora.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_fora.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "61f26fc3443ff9f7db50b1b2256a82bd8bcd7a12f535a3c5693b67a6836f21db",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_fora.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_fora.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "0f776bb773b5e1e46e6abdabb8705cb2ac027547382aae9728e2de19d36df3e4",
+      "bytes": 141730,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_fora.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_fora.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "c04832166f73fca5c0d1b9c60a7248727d0cc248d2500b5e227f098e081f6ff7",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_ion.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_ion.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "524822604fd59b5a611ff593c5e58c7b8563778920a1fb2f07ad6c2956484f09",
+      "bytes": 141692,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_ion.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_ion.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "e7cc5271c704c3fdb54ad09eab06c2ef1a6c8649fe4705c7bf016335a9627025",
+      "bytes": 1070,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_ion.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_ion.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "32d0885c81081f06d1affa68adf4d90762b20b7d5dfac613893ee76d46cb5366",
+      "bytes": 141694,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_ion.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_ion.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "5e2cb06ad89e21fe60d1abb5b4b8e3488bc6d4d0031c477400e48355be53ee27",
+      "bytes": 1070,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "fdb97425d8bed6552b44df2340e5b8b01df94cf9421295d1149f6f2da24fe6b3",
+      "bytes": 141682,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_mist.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_mist.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "ca6601c5972bff09a9b7bd604d4608cbf798cfb64b6360062702668f9234e531",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "386fae251db360659b25fe158834412ad01efb3bad7d1f542a2020e32c53315a",
+      "bytes": 141684,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_mist.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_mist.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "3aadf46893c5b42a69d3b12394d2bb5f48213586fa5e1dddd9bfde6bb7bc6db0",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "799b70ffe144c68a75e639bf49e456cc504b255799e5824415e1fc6bf7489925",
+      "bytes": 141691,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_neut.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_neut.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "3dc2f322cd3626e4408a97dbe59728a07353ee2cf484ddffff7e48df829d1e9e",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "5e490f9cd19754414cb8bd5c5336b63c24be0a96ae9026972cd61b24c0eda117",
+      "bytes": 141697,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_neut.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_neut.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "5a8a7790b249752f79bc20155eb3bcde9d7095e7540aafcbc88d5079c3a65593",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "49f92b29eb7944f110ecfb1c86b4f4af2f36fbd7673caee6a46069415e7f26ce",
+      "bytes": 141761,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_reag.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_reag.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "2859de4e1e61a8f6487665abccb1210292baf3d4f950dbc7b4fd87f0afb020c0",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "b9daa478d500fb3b2cd5d8e4fa17a031bf96273ac42bbd26444e55fb6ddc3198",
+      "bytes": 141750,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r10_reag.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r10_reag.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "2a9335eabdc12d8986fef709a6373abfcc23339b3233555273d2deaecec0e119",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionA.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionA.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "2e0e538b52fc69f99931bf044c74f2617deb8ed443420aa2e8a82df6e4ecc62f",
+      "bytes": 141622,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionA.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionA.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "7a78b9747752222747b186e541a5ea21b65ac8dc8a1c34ab105088dcca5ad5b8",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionA.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionA.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "77ab9f9ec2c63686a0c5f4cad725a4a3cee97d90547feca7da834a6c37844fd2",
+      "bytes": 141622,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionA.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionA.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "ac12d2b06d53b6909a4d6f1c06d802007a280ec473f09c4a623f9253dbe51c8e",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionB.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionB.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "2e7db1b72c4d984b6a33db9f1ffe2ae54daf1fc299b9308488f7b39a84d5e473",
+      "bytes": 141616,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionB.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionB.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "77d12828bbddee06a1fec8ce2d98e934aaf11474e9d43cc66f457fd58e9e235f",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionB.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionB.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "3adaf9b238bc635ceba7465a53540a37df8ca7d8cd3ee65dfeebd7e663140bd9",
+      "bytes": 141615,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_ionB.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_ionB.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "3ce072c35058fa3eb6e502c2e2975008fb67c4e025fbb91dc9ffdb3fa7b03f7c",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "ff4e5cf0c92a78e915ed1ca924673090a39dbed610e2b6d12693d47e4e94b975",
+      "bytes": 141606,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_mist.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_mist.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "6d6527d22f3a6e3c4f30d174ec2d4d0e0a8499f7b86d9a840d5f7059f34c22a8",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "7d7cdea21ca95d34692083e73007bbb492895c07d1f677f03f66fff0e62eee4f",
+      "bytes": 141607,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_mist.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_mist.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "6d91215036cf227e30b97283ecc0757850f484f4b69657094161c40f01a645bc",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "5ad1f0f17ad3a7202d0266933cc1401722c36b34382c1971128ca3203d9e510d",
+      "bytes": 141591,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_neut.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_neut.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "355a5d22b5886956a21bb2a9cd8ad2e0dc95451fb2e24d6870162b6e11878ab0",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "30f966bd847919775c6d03f179fab830ae6447e3b55b04d30c0501d84ad8164e",
+      "bytes": 141595,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_neut.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_neut.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "1b0ee9eb105eedeb87c7d0ae8aafd7bc7ca857d442111e4275c7e34f02f0f7be",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "ec163dfad943c66da1f29c1212cdb39920854169766910b3ae7fac853f8cfd60",
+      "bytes": 141676,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_reag.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_reag.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "6bd3f84c4aa2c9922cf8c4598fa2aaa52cfea02b3ddf5e569a645b8a3dc5b572",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "e8555eeb5802068eb2f5628ddfffd8f6af61e2637d21e5555f53d4c0de9c089a",
+      "bytes": 141684,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r13_reag.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r13_reag.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "1c13eacf6b284805687dc8a7ea5a3e3145ca0359e6d4c99a417b24275790bfa8",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionA.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionA.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "e0b2e88f5974ee140b18874b6c34810aeb2ebea335d540dc34f7820bf7f49ced",
+      "bytes": 141564,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionA.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionA.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "8be615c6c71a1273125ed722ddd9292475af1f7f902cda0d698fdbe056bc9a02",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionA.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionA.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "a080018c35a2bd1ddb26ce384485b6e318acf006b357937ed67eb64344c17f83",
+      "bytes": 141562,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionA.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionA.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "54c5c803b24c2a2cd20ff1b5ceaba726e93880fa114091c43f003266b186ad94",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionB.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionB.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "cb9f1cc6efbff58e15bddd5506f2315304550151bfa829972ee12772f94c7372",
+      "bytes": 141543,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionB.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionB.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "b73a86c0c24b52e0511446ed2cb069c6a00126ac70385705df84ed91d063681f",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionB.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionB.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "f99b085c8225e455608bd8a42835bb8d77fa55ad56edf13a809855ba3db9e9ba",
+      "bytes": 141548,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_ionB.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_ionB.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "57711f3523a4bd096ef9baea9a703ac90463de57164ac3942fc481b1140d0b80",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_mist.T333.mlmd-run2r10m0.rdf.csv",
+      "sha256": "711077641b865123201a5e8bfba2c53ce3463cda2a5330709ada99c70582f46d",
+      "bytes": 141547,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_mist.T333.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_mist.T333.mlmd-run2r10m0.rdf.json",
+      "sha256": "7a75e7ef1cb503b089f9e039afc73ec428410103d8784d0c2f5dde211ed31632",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_mist.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "ea44a213c73f6a0e9561b93ecd90d2aab07e79fbe5f736a85979962f4ae1275a",
+      "bytes": 141550,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_mist.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_mist.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "c91e63574ea01f630237c70a7d7316ade15ff23b101d3adcbb4c15a9705fe6d3",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_neut.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "1844ffec30cfaabe9969d388c81c39c6c3b5351d66e98be96621378ed26f1e74",
+      "bytes": 141542,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_neut.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_neut.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "26a76abebb86ec13f08ac4690590858b64b67fac8e7e033e434508f6b7d17d14",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_neut.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "9ff9c818ac14f3d3939d017d3435fb82d470a5b093d9c87926996539d1933547",
+      "bytes": 141552,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_neut.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_neut.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "490470fa239a7e92c99e1aa69645aea478ce6ec9e98e6b5b359598bb120a97ab",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_reag.T400.mlmd-run2r10m0.rdf.csv",
+      "sha256": "2f9887b4471d45c9b9e21e0135c560422d17f2aa7c6010951469a6cf019ba838",
+      "bytes": 141622,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_reag.T400.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_reag.T400.mlmd-run2r10m0.rdf.json",
+      "sha256": "cb0138ade63b7ba45bdcfcc68f44d40cb05ca52de9be41e84751392fc940472a",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_reag.T450.mlmd-run2r10m0.rdf.csv",
+      "sha256": "15b773abeb33407da43a8fc11d9989938cd844ed0e13acc23b6189a12a0e4a63",
+      "bytes": 141604,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    },
+    {
+      "path": "rdf/r15_reag.T450.mlmd-run2r10m0.rdf.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3_urea_mlip/model/rdf/r15_reag.T450.mlmd-run2r10m0.rdf.json",
+      "sha256": "b626fb141415343b7f19857df5ae0c8549db8d66b90494b4ee19a6461b117487",
+      "bytes": 1072,
+      "source_mtime": "2026-11-19T20:19:36+00:00"
+    }
+  ]
+}

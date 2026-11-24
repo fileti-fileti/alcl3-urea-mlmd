@@ -1,0 +1,45 @@
+{
+ "atoms": {
+  "Al": 48,
+  "C": 32,
+  "Cl": 144,
+  "H": 128,
+  "N": 64,
+  "O": 32
+ },
+ "box_A": 20.550878,
+ "created": "2026-11-19T15:27:38",
+ "definition": "g: all pairs (intra + inter), minimum image, cubic box; se: standard error of the block means (blocks of consecutive frames); cn: running count of b atoms per a atom up to r_upper",
+ "dr_A": 0.02,
+ "frames_read": 1001,
+ "frames_used": 1001,
+ "mode": "xyz",
+ "name": "r15_ionA.T333.mlmd-run2r10m0",
+ "nblocks": 5,
+ "numpy": "2.2.6",
+ "pairs": [
+  "Al-Cl",
+  "Al-O",
+  "Al-N",
+  "Al-Al",
+  "Cl-Cl",
+  "Cl-H",
+  "O-H",
+  "C-O",
+  "C-N",
+  "N-H"
+ ],
+ "python": "3.10.16",
+ "rdf_version": 1,
+ "repo_commit": "ea24631b240bb8410d2b1f729084314e9e06a96e",
+ "rmax_A": 9.7,
+ "script_sha256": "7c710bba297009d50a4714a032a20b4d9c28e5eb4cc621b311cc11d6722767a1",
+ "sources": [
+  {
+   "path": "/scratch/acmes/davi.fileti/mlff-efficiency-studies/runs/rdf/alcl3_urea/run2r10m0/T333_r15_ionA/prod.xyz",
+   "sha256": "49010c0b23042b8157b1c68d9075223d0df107fe5d9e62254d24c8d61998df7a"
+  }
+ ],
+ "step_first": 0,
+ "step_last": 10000
+}

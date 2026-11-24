@@ -1,0 +1,18 @@
+{
+  "search.followSymlinks": false,
+  "files.watcherExclude": {
+    "**/data/**": true,
+    "**/runs/**": true,
+    "**/logs/**": true,
+    "**/*.{xyz,extxyz,traj,nc,db,sqlite,wfn,restart,bak,cube,dcd,xtc,trr,lammpstrj,npy,npz,h5,hdf5,pt,pth,ckpt,model,pb,pkl}": true
+  },
+  "search.exclude": {
+    "**/data": true,
+    "**/runs": true,
+    "**/logs": true,
+    "**/*.{xyz,extxyz,traj,nc,db,sqlite,wfn,restart,bak,cube,dcd,xtc,trr,lammpstrj,npy,npz,h5,hdf5,pt,pth,ckpt,model,pb,pkl}": true
+  },
+  "files.exclude": {
+    "**/__pycache__": true
+  }
+}

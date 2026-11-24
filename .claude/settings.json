@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -Rf *)",
+      "Bash(rm -fR *)",
+      "Bash(rm -r -f *)",
+      "Bash(rm -f -r *)",
+      "Bash(git push --force*)",
+      "Bash(git push * --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * -f*)",
+      "Bash(git push *+*)",
+      "Edit(/results/**)"
+    ],
+    "ask": [
+      "Bash(sbatch *)",
+      "Bash(scancel *)",
+      "Bash(srun *)",
+      "Bash(salloc *)",
+      "Bash(git push *)"
+    ]
+  }
+}

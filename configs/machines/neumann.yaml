@@ -1,0 +1,31 @@
+# neumann (UNIFESP) — owner's own cluster. Facts verified on 2026-11-13 unless noted.
+# `unknown` = not verified yet; scripts treat it as unavailable. Never guess a value.
+# Access from the Mac: `ssh eudes@172.20.22.62` (UNIFESP VPN; owner, 2026-11-17).
+name: neumann
+hostnames:            # fnmatch on `hostname` and its short form
+  - headnode          # headnode.cluster.neumann.unifesp.br
+  - "n[0-9][0-9]"     # compute nodes n01..n12 (sinfo NodeHostname)
+scheduler: slurm      # slurm 22.05.2, priority/basic (FIFO per partition)
+cost:
+  unit: core-hours    # ElapsedRaw x AllocCPUS / 3600 (ADR-0005)
+  source: sacct
+storage:
+  repo_parent: /home/eudes            # repos at ~/<repo>, bare repos at ~/git/ (ADR-0004)
+  store_parent: /home/eudes           # project store: <store_parent>/<project>-store
+  purge: none                         # owner, 2026-11-13: nothing deletes /home automatically
+  notes: "/home is NFS-exported to the nodes; /scratch exists on the headnode only"
+partitions:
+  - batch             # n01-n06, n08-n11 (n01-n08 old, no CP2K; n09 kills CP2K after ~11-13 h, owner-reported)
+  - EPYC_9734         # n12, 448 CPUs
+toy_job_partition: batch
+modules:
+  cp2k: cp2k/2024.1-gcc-12.2.0-iy4ur5k   # production (owner); SLURM reference: the owner's benchmarked script
+  gromacs: unknown    # TODO(owner): production GROMACS module
+  lammps: unknown     # TODO(owner): production LAMMPS module
+python:
+  conda_sh: /home/eudes/miniforge3/etc/profile.d/conda.sh
+  envs:               # existing, untouchable (ADR-0007); jobs activate one explicitly
+    - base
+    - analysis
+    - deepmd_intel    # auto-activated in interactive shells only (~/.bashrc)
+    - /home/eudes/deepmd-v3

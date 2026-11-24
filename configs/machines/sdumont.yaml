@@ -1,0 +1,39 @@
+# SDumont (LNCC), project acmes. Server checks done 2026-11-13 (setup F3, partial);
+# items marked "owner-reported" come from the owner and were not verified on the server.
+# `unknown` = not verified yet; scripts treat it as unavailable. Never guess a value.
+name: sdumont
+hostnames:
+  - "sdumont[0-9]*"   # login nodes sdumont17/sdumont18 seen; TODO(owner): compute-node hostnames
+scheduler: slurm
+cost:
+  unit: unknown       # TODO(owner): allocation unit and conversion from sacct (ADR-0005)
+  source: sacct
+storage:
+  repo_parent: /scratch/acmes/eudes.fileti3/projects    # clone in /scratch (ADR-0014); $HOME=/prj/acmes/eudes.fileti3
+  store_parent: /scratch/acmes/eudes.fileti3/projects   # owner-reported area; unknown purge accepted (ADR-0012)
+  purge: unknown                                    # TODO(owner): /scratch purge rule (LNCC)
+  notes: "$HOME=/prj/acmes/eudes.fileti3 (NFS, 250G); /scratch Lustre; login ulimit -t 1800"
+partitions:           # account acmes on all eight (sacctmgr, 2026-11-17); max wall per job (assoc):
+                      # *_dev 00:20:00, sequana_cpu/_gpu/_cpu_bigmem 4-00:00:00, *_long 31-00:00:00
+  - sequana_cpu
+  - sequana_cpu_long
+  - sequana_cpu_dev
+  - sequana_cpu_bigmem
+  - sequana_cpu_bigmem_long
+  - sequana_gpu       # 83 nodes: 4x V100-SXM2-32GB, 48 CPUs, 384 GB each (sinfo, nvidia-smi); assoc (2026-11-24): 4 running / 24 submitted jobs
+  - sequana_gpu_long  # same nodes; assoc (2026-11-24): 3 running / 18 submitted jobs
+  - sequana_gpu_dev   # short GPU checks, 20 min; assoc (2026-11-24): 1 running / 1 submitted job
+                      # GPU partitions: billing TRES = CPUs; all GPUs are V100 (gdl, 8x V100, not in our assoc)
+# GPU jobs: --exclude=sdumont8042 (owner, 2026-11-17: node failed the owner's runs; retest later)
+toy_job_partition: sequana_cpu_dev
+# login node sdumont17: 3x V100-PCIE-32GB, driver 560.35.03 (CUDA 12.6) (nvidia-smi, 2026-11-24);
+# compute-node driver: unknown
+modules:
+  cp2k: unknown       # TODO(owner)
+  gromacs: unknown
+  lammps: /scratch/acmes/eudes.fileti3/projects/shared/software/lammps_mace/bin/lmp   # own build, not a module;
+                      # needs mace_env/lib and shared/software/libtorch-gpu/lib in LD_LIBRARY_PATH (owner's earlier LAMMPS jobs)
+python:
+  conda_sh: /scratch/acmes/eudes.fileti3/miniconda3/etc/profile.d/conda.sh   # used by the owner's earlier GPU jobs
+  envs:
+    - /scratch/acmes/eudes.fileti3/projects/shared/envs/mace_env   # owner-reported; untouchable

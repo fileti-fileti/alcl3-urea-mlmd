@@ -1,0 +1,16 @@
+# Large storage: never in git. No trailing slash, so symlinks are matched too.
+/data
+/runs
+/logs
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editors / OS
+.DS_Store
+*.swp
+
+# Claude Code per-user local settings (personal, not shared)
+.claude/settings.local.json

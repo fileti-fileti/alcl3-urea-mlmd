@@ -1,0 +1,14 @@
+# File extensions that never enter git (case-insensitive). Single source of truth, read by
+# scripts/check_staged_files.sh (pre-commit hook) and scripts/register_result.py.
+# Plain .xyz is NOT listed on purpose: small initial geometries are allowed; the 1 MiB
+# size limit still applies.
+# checkpoints / models
+pt pth ckpt model pb
+# arrays / serialized
+h5 hdf5 npy npz pkl pickle
+# archives
+tar gz tgz bz2 xz zst zip 7z
+# wavefunctions / restarts / volumetric / trajectories
+wfn restart bak cube dcd xtc trr lammpstrj traj nc
+# datasets / databases
+extxyz db sqlite
