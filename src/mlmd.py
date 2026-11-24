@@ -14,6 +14,11 @@ Stage kinds (each has a unique `name`):
   npt_berendsen  isotropic NPTBerendsen: dt_fs, ps, T_K, taut_fs, P_bar, taup_fs,
                  compressibility_per_bar, mean_volume_last_ps; at the end the box is scaled to
                  the mean volume of the last mean_volume_last_ps (positions scaled with it)
+  massive_ou     one thermostat per degree of freedom (CP2K CSVR REGION MASSIVE, as Davi's
+                 MassiveCSVR): before each velocity Verlet step p <- sqrt(c) p +
+                 sqrt((1 - c) m kT) xi, c = exp(-dt / taut): dt_fs, ps, T_K, taut_fs
+  nve            velocity Verlet, no thermostat: dt_fs, ps; needs velocities from an
+                 earlier stage
 MD stages also take thermo_every and dump_every (steps; dump_every 0 = no frames); both, and
 ckpt_every, are multiples of check_every. The centre of mass is fixed (FixCom). Velocities are
 drawn (Maxwell-Boltzmann, zero total momentum) only when the incoming atoms have none.
@@ -47,8 +52,12 @@ MD_KEYS = {
     "npt_berendsen": {"dt_fs", "ps", "T_K", "taut_fs", "P_bar", "taup_fs",
                       "compressibility_per_bar", "mean_volume_last_ps", "thermo_every",
                       "dump_every"},
+    "massive_ou": {"dt_fs", "ps", "T_K", "taut_fs", "thermo_every", "dump_every"},
+    "nve": {"dt_fs", "ps", "thermo_every", "dump_every"},
 }
-OPTIONAL = {"nvt": {"T_start_K"}, "npt_berendsen": set(), "minimise": set()}
+OPTIONAL = {"nvt": {"T_start_K"}, "npt_berendsen": set(), "minimise": set(),
+            "massive_ou": set(), "nve": set()}
+CONSERVED_KINDS = ("nvt", "massive_ou", "nve")   # thermo column conserved_eV is defined
 STAGE_KEYS = dict(MD_KEYS, minimise={"fmax_eV_A", "max_steps"})
 
 
@@ -228,7 +237,7 @@ def _thermo_row(atoms, step, st, dyn_kind, t_target, transferred, wall, sps):
     vol = atoms.get_volume()
     stress = atoms.get_stress(include_ideal_gas=True)
     p_bar = -sum(stress[:3]) / 3.0 / units.bar
-    conserved = epot + ekin - transferred if dyn_kind == "nvt" else float("nan")
+    conserved = epot + ekin - transferred if dyn_kind in CONSERVED_KINDS else float("nan")
     dens = atoms.get_masses().sum() * AMU_G / (vol * 1e-24)
     vals = [step, step * st["dt_fs"] / 1000.0, atoms.get_temperature(), t_target, epot, ekin,
             epot + ekin, conserved, vol, dens, p_bar, wall, sps]
@@ -257,6 +266,30 @@ def run_minimise(run, st, atoms):
     check_physical(atoms, run.cfg["min_distance_A"])
 
 
+def massive_ou(atoms, dt, temperature_K, taut, rng):
+    """Velocity Verlet with one Ornstein-Uhlenbeck thermostat per degree of freedom, applied
+    before each step (CSVR with one degree of freedom; Davi's MassiveCSVR). The FixCom
+    constraint removes the centre-of-mass momentum the noise adds."""
+    import math
+    import numpy as np
+    from ase import units
+    from ase.md.verlet import VelocityVerlet
+
+    class MassiveOU(VelocityVerlet):
+        def step(self, forces=None):
+            ke0 = self.atoms.get_kinetic_energy()
+            p = self.atoms.get_momenta()
+            xi = self.rng.standard_normal(p.shape)
+            self.atoms.set_momenta(math.sqrt(self.c) * p + np.sqrt((1.0 - self.c) * self.kT * self.m) * xi)
+            self.transferred_energy += self.atoms.get_kinetic_energy() - ke0
+            return super().step(forces)
+
+    dyn = MassiveOU(atoms, dt)
+    dyn.kT, dyn.c, dyn.rng = temperature_K * units.kB, math.exp(-dt / taut), rng
+    dyn.m, dyn.transferred_energy = atoms.get_masses()[:, np.newaxis], 0.0
+    return dyn
+
+
 def run_md(run, st, atoms, rng, steps_done, transferred):
     import numpy as np
     from ase import units
@@ -264,7 +297,7 @@ def run_md(run, st, atoms, rng, steps_done, transferred):
     from ase.md.velocitydistribution import MaxwellBoltzmannDistribution, Stationary
     name, kind = st["name"], st["kind"]
     nsteps, ce, ck = steps_of(st), int(run.cfg["check_every"]), int(run.cfg["ckpt_every"])
-    t_end = float(st["T_K"])
+    t_end = float(st.get("T_K", "nan"))               # nve: no target temperature
     t_start = float(st.get("T_start_K", t_end))
 
     def t_at(step):
@@ -272,6 +305,8 @@ def run_md(run, st, atoms, rng, steps_done, transferred):
 
     atoms.set_constraint(FixCom())
     if steps_done == 0 and not np.any(atoms.get_momenta()):
+        if kind == "nve":
+            raise ConfigError("stage {}: nve needs velocities from an earlier stage".format(name))
         MaxwellBoltzmannDistribution(atoms, temperature_K=t_at(0), rng=rng)
         Stationary(atoms)
         run.log("{}: Maxwell-Boltzmann velocities at {:.1f} K".format(name, t_at(0)))
@@ -281,6 +316,12 @@ def run_md(run, st, atoms, rng, steps_done, transferred):
         dyn = Bussi(atoms, dt, temperature_K=t_at(steps_done), taut=st["taut_fs"] * units.fs,
                     rng=rng)
         dyn.transferred_energy = transferred
+    elif kind == "massive_ou":
+        dyn = massive_ou(atoms, dt, t_end, st["taut_fs"] * units.fs, rng)
+        dyn.transferred_energy = transferred
+    elif kind == "nve":
+        from ase.md.verlet import VelocityVerlet
+        dyn = VelocityVerlet(atoms, dt)
     else:
         from ase.md.nptberendsen import NPTBerendsen
         dyn = NPTBerendsen(atoms, dt, temperature_K=t_end, pressure_au=st["P_bar"] * units.bar,

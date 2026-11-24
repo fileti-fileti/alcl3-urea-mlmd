@@ -171,6 +171,52 @@ class TestMLMD(unittest.TestCase):
         p_first = read(str(ext / "prod2.xyz"), index=0).positions
         self.assertTrue(np.allclose(p_last, p_first, atol=1e-7))   # junction frame repeated
 
+    OU = {"name": "ou", "kind": "massive_ou", "dt_fs": 2.0, "ps": 2.0, "T_K": 60, "taut_fs": 50,
+          "thermo_every": 10, "dump_every": 0}
+    NVE = {"name": "nve", "kind": "nve", "dt_fs": 2.0, "ps": 0.4, "thermo_every": 10, "dump_every": 0}
+
+    def thermo(self, path):
+        import numpy as np
+        return np.genfromtxt(str(path), delimiter=",", names=True)
+
+    def test_massive_ou_temperature_and_bookkeeping(self):
+        import numpy as np
+        d = self.rundir("a", self.config(stages=[self.OU]))
+        self.assertEqual(self.run_(d), 0)
+        t = self.thermo(d / "ou.thermo.csv")
+        self.assertLess(abs(t["T_K"][20:].mean() - 60.0), 6.0)
+        self.assertTrue(np.isfinite(t["conserved_eV"]).all())
+        self.assertLess(np.ptp(t["conserved_eV"]), 0.05 * t["ekin_eV"].mean())
+
+    def test_nve_conserves_energy_and_needs_velocities(self):
+        import numpy as np
+        d = self.rundir("a", self.config(stages=[dict(self.OU, ps=0.2), self.NVE]))
+        self.assertEqual(self.run_(d), 0)
+        t = self.thermo(d / "nve.thermo.csv")
+        self.assertLess(np.ptp(t["etot_eV"]), 0.01 * t["ekin_eV"].mean())
+        self.assertTrue(np.allclose(t["conserved_eV"], t["etot_eV"]))
+        with self.assertRaises(self.m.ConfigError):
+            self.run_(self.rundir("b", self.config(stages=[self.NVE])))
+
+    def test_restart_new_kinds_equals_uninterrupted(self):
+        import numpy as np
+        from ase.io import read
+        cfg = self.config(stages=[dict(self.OU, ps=0.2, dump_every=10), dict(self.NVE, ps=0.2, dump_every=10)])
+        a, b = self.rundir("a", cfg), self.rundir("b", cfg)
+        self.assertEqual(self.run_(a), 0)
+        codes = []
+        for _ in range(100):
+            codes.append(self.run_(b, budget_s=1.0, clock=FakeClock()))
+            if codes[-1] != 3:
+                break
+        self.assertEqual(codes[-1], 0)
+        self.assertGreater(codes.count(3), 5)
+        fa, fb = read(str(a / "nve.final.traj")), read(str(b / "nve.final.traj"))
+        self.assertTrue(np.allclose(fa.positions, fb.positions, atol=1e-8))
+        self.assertTrue(np.allclose(fa.get_momenta(), fb.get_momenta(), atol=1e-8))
+        ca, cb = self.thermo(a / "ou.thermo.csv"), self.thermo(b / "ou.thermo.csv")
+        self.assertTrue(np.allclose(ca["conserved_eV"], cb["conserved_eV"], atol=1e-8))
+
     def test_npt_box_scaled_to_mean_volume(self):
         from ase.io import read
         d = self.rundir("a", self.config())
