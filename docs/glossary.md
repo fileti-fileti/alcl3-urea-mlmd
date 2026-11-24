@@ -17,6 +17,7 @@ One line per term.
 - **Legacy result**: a result made outside this repo, registered verbatim as `results/legacy-*` (ADR-0008).
 - **MLMD**: molecular dynamics driven by a machine-learned force field (here MACE).
 - **NPT relaxation**: short NPT stage that only brings the start-box pressure to plausible values; not a measurement (ADR-0016).
+- **Pilot phases**: phase 1 = the first 200 ps of production, exploration, never judged; phase 2 = its extension (`prod2`), judged by the reading rule fixed between the phases (`docs/experiments/pilot-r10-T400.md`).
 - **r**: AlCl3:urea molar ratio (r = 1.3: 39 Al per 30 urea in the AIMD seed).
 - **rdf-aimd-v1**: the owner's test comparing MLMD and AIMD RDFs (`docs/rdf-references.md`).
 - **Reading rule**: question, metric, threshold and yes/no/inconclusive, fixed before the result (ADR-0013).

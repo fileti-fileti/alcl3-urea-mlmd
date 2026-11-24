@@ -14,6 +14,51 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-24 — sdumont — Smoke passes, setup check fails, pilot phase 1 prepared
+- Goal: read the smoke + bench; run the setup check; set up the pilot's first 200 ps.
+- Done:
+  - Smoke + bench job 11758464 (`sequana_gpu_dev`, sdumont8090, 368 s, COMPLETED 0:0):
+    all 5 checks true; driver rc 3 then 0; GPU peak 4.72 GB (float64) and 2.38 GB
+    (float32); NVT 6.13 / 8.93 steps/s (float64 / float32) = 0.265 / 0.386 ns/day at
+    0.5 fs; NPT 3.19 / 4.66 steps/s; float32 − float64: ΔE −0.80 / −0.78 meV/atom
+    (reagentes / ionico), max |ΔF| 1.4e-4 eV/Å. Ledger: 10.8356 UA.
+  - `252340d`: `scripts/prep_mlmd.py` accepts upper case in run names (`T400`, the
+    CLAUDE.md convention); test `test_run_name`.
+  - Setup check job 11758552 (`sequana_gpu`, sdumont8053, 14 min 05 s, COMPLETED 0:0) from
+    `runs/setup-r10neut-T400/` at `252340d`; RDF (`rdf.py`, sha256 `7c710bba…`) and
+    `rdf_compare.py` run. Ledger: 24.8806 UA.
+  - `3540181`: pilot phase 1 (configs `configs/mlmd/pilot-r10-T400-{reag,ion}.json`, doc
+    updated, ADR-0016 barostat accepted), test `test_extend_after_done_equals_planned`;
+    74 tests OK with the venv. `runs/pilot-r10-T400-{reag,ion}/` prepared at `3540181`,
+    not submitted.
+- Results: setup check **FAIL** by its fixed rule
+  (`docs/experiments/setup-check-r10neut-T400.md`): N-H g at the peak +13.9 on 104.8
+  (8.1 errors), Cl-H peak −0.06 Å, production mean T 394.69 K (rule: 400 ± 5 K); the other
+  8 pairs pass.
+- Decisions (owner, 2026-11-24, "ok"):
+  - Pilot in two phases: phase 1 = 200 ps of production, exploration, never judged; it
+    sizes the reading rule; phase 2 = the extension, judged; rule and pending claim ID-1
+    fixed between the phases. Owner asked for 200 ps first ("não faça um teste inicial com
+    1ns ... 200ps"), generous frames and a possible extension; agent's justification:
+    deciding the use of data after seeing them breaks ADR-0013.
+  - Pilot dtype float32: max |ΔF| about 200× below the model's test force error
+    (31.7 meV/Å), 1.46× faster. Both starts. Frames every 10 fs in production.
+  - Ramp and minimiser values of the pilot draft; Berendsen parameters of ADR-0016
+    (status line updated).
+  - Run-name fix in `prep_mlmd.py`.
+- Problems:
+  - Setup check fails. Agent's hypothesis: the N-H stretches are still cold after a 1 ps
+    global-Bussi equilibration (N-H bond-length std 0.0248 → 0.0254 Å across the five 1 ps
+    production blocks); Davi equilibrated with a massive CSVR. Not tested. The pilot's
+    pre-production also uses global thermostats (Bussi ramp, Berendsen NPT).
+  - `python3` on PATH is `mace_env`'s: stdlib scripts are called with `/usr/bin/python3`
+    (3.6.8). This session's first `session_facts.py` and `cost_ledger.py` calls ran under
+    `mace_env` (stdlib only; output unaffected).
+  - `cp` is `cp -i` in this shell: a non-interactive `cp` over an existing file does
+    nothing; use `/bin/cp -f`.
+- Next: owner decides the fix for the setup check (proposal: per-atom Langevin
+  equilibration, setup check v2); then pilot phase 1 (re-prep if the protocol changes).
+
 ## 2026-11-24 — sdumont — Env 0.3.16 ready, ledger in UA, smoke job submitted
 - Goal: finish the env with mace-torch 0.3.16; UA conversion in `cost_ledger.py`; GPU
   smoke + benchmark on the 1512-atom box.

@@ -45,4 +45,22 @@ coordination numbers far outside the statistical error.
   r10_neut.T400.mlmd-setupcheck -o runs/setup-r10neut-T400/rdf`, then `rdf_compare.py`.
 
 ## Results
-(pending)
+Job 11758552 (`sequana_gpu`, sdumont8053, 14 min 05 s, COMPLETED 0:0), `runs/setup-r10neut-T400/`
+at commit `252340d`: 1001 frames, steps 0–10 000; 18.2 steps/s (median). Output of
+`rdf_compare.py` (report `runs/setup-r10neut-T400/rdf/compare.json`, exit 1) and of the
+production thermo file:
+- 8 of 10 pairs pass. N-H fails: g at the reference peak (1.01 Å) is higher by 13.9
+  (reference 104.8), 8.1 combined errors; peak position and cn agree. Cl-H fails: peak
+  position −0.06 Å (3 bins); its g at the peak and cn are within 0.7 and 0.1 errors.
+  Al-Cl passes with g at the peak higher by 2.1 (reference 25.6), 2.6 errors.
+- Production mean temperature 394.69 K (5 block means 394.26, 389.54, 400.08, 398.59,
+  390.97 K; standard error 2.06 K): outside 400 ± 5 K.
+- **Reading: FAIL.** The pilot waits until the cause is found.
+- Agent's diagnosis (a hypothesis, not tested): the N-H stretches are colder than the
+  rest. A higher N-H peak means a narrower bond-length distribution, and its width grows
+  through the production (N-H bond-length std per 1 ps block: 0.0248, 0.0249, 0.0250,
+  0.0254, 0.0254 Å), so those modes were still heating up. Davi's massive CSVR heats every
+  degree of freedom directly; our global Bussi equilibration (1 ps) exchanges energy with
+  the high-frequency modes only slowly. The low mean temperature fits a heat sink still
+  being filled. Candidate fix (owner's decision): a per-atom thermostat (ASE Langevin) for
+  the equilibration, then this check again as a new version.

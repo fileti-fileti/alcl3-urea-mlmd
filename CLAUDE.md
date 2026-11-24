@@ -156,22 +156,26 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 <!-- BEGIN STATUS -->
 - Updated: 2026-11-24 — sdumont
 - State: on SDumont and GitHub; model run2r10m0, boxes v2 and the setup-check start in the store
-  (sha256 checked); env `mace0316_env` built (job 11758427, lock identical), 72 tests pass
-  with it; ledger in UA (ADR-0017); smoke + bench job 11758464 running; no MLMD run; no claims.
+  (sha256 checked); env `mace0316_env`, 74 tests pass with it; ledger in UA (ADR-0017); smoke +
+  bench passed (job 11758464); setup check FAILED its rule (job 11758552); pilot phase 1
+  prepared in `runs/pilot-r10-T400-{reag,ion}` (commit 3540181), not submitted; no claims.
 - Now (SDumont):
-  - Job 11758464 (smoke + bench, `runs/smoke-bench/`): read `report.json` and `slurm-smoke-bench-11758464.out` (checks, steps/s, ns/day, GPU peak memory per stage, driver rc 3 then 0), `cost_ledger.py add`; a rerun needs `--exclude=sdumont8042` (not in `src/smoke_bench.sbatch`).
-  - Setup check (owner's ok given): after the smoke passes, prep and submit `configs/mlmd/setup-r10neut-T400.json` (`--time 01:00:00 --max-chain 2`); RDF, `rdf_compare.py`, apply its rule.
+  - Setup-check fail (`docs/experiments/setup-check-r10neut-T400.md`, Results): find the cause with the owner; agent's proposal: per-atom Langevin equilibration (a new stage kind in `src/mlmd.py`), then setup check v2. The pilot waits.
+  - Register the setup-check output (`runs/setup-r10neut-T400/`: `rdf/*`, `prod.thermo.csv`, `mlmd.log`) once the owner names the globs.
 - Later:
-  - Pilot `docs/experiments/pilot-r10-T400.md`: fix the reading rule with the owner, pending claim ID-1, then prep and submit both starts.
+  - Pilot phase 1: submit `runs/pilot-r10-T400-{reag,ion}` after the setup check passes (owner's go; ≈ 4.0k UA); re-prep if the protocol changes.
+  - Pilot phase 2: reading rule + pending claim ID-1 from phase 1, then extend with `prod2` (procedure in the pilot doc).
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
   - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
-  - LAMMPS route (`lammps/10Set25_oneapi-2022_cuda12.6`) only if ASE ns/day is too low (new ADR).
+  - LAMMPS route (`lammps/10Set25_oneapi-2022_cuda12.6`) or cuequivariance (not installed) if ASE ns/day is too low (new ADR).
 - Waiting on owner:
-  - Pilot reading rule: census quantity, convergence criterion (window, blocks), maximum length; dtype after the benchmark; ok on the ramp and minimiser values.
+  - Fix for the setup-check fail (equilibration thermostat).
+  - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
+  - ns/day threshold that triggers the LAMMPS / cuequivariance route (ASE float32: 0.386 ns/day).
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
   - AIMD RDFs: the owner's directory, or the copy in Davi's area (agent asks when the comparison is due).
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-24, end-of-session commit on top of 92f72b7
+- Last sync — sdumont: 2026-11-24, end-of-session commit on top of 3540181
 <!-- END STATUS -->
