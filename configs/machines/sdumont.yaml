@@ -6,8 +6,8 @@ hostnames:
   - "sdumont[0-9]*"   # login nodes sdumont17/sdumont18 seen; TODO(owner): compute-node hostnames
 scheduler: slurm
 cost:
-  unit: unknown       # LNCC bills UA: 1 per CPU core-hour, 100 per GPU-hour (manual §06, as quoted in
-                      # Davi's hpc-guide, 2026-10); ledger conversion not implemented yet (ADR-0005)
+  unit: UA            # LNCC bills UA: 1 per CPU core-hour, 100 per GPU-hour (manual §06, as quoted in
+                      # Davi's hpc-guide, 2026-10); GPU jobs counted as cores + GPUs (ADR-0017)
   source: sacct
 storage:
   repo_parent: /scratch/acmes/eudes.fileti3/projects    # clone in /scratch (ADR-0014); $HOME=/prj/acmes/eudes.fileti3

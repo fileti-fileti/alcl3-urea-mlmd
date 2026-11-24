@@ -17,9 +17,10 @@ latest recorded end date. --sacct-file reads saved `sacct -X -n -P -o <FIELDS>` 
 --machine defaults to the machine detected from the hostname (configs/machines/*.yaml)
 and --unit to that machine's cost.unit.
 
-Cost estimate: unit "core-hours" = ElapsedRaw x AllocCPUS / 3600. Any other unit is
-written as "unknown" until its conversion is known (ADR-0005). `sum` reports totals per
-unit and never adds different units together.
+Cost estimate: unit "core-hours" = ElapsedRaw x AllocCPUS / 3600; unit "UA" (SDumont,
+ADR-0017) = ElapsedRaw x (AllocCPUS + 100 x GPUs) / 3600, GPUs from AllocTRES gres/gpu.
+Any other unit is written as "unknown" (ADR-0005). `sum` reports totals per unit and
+never adds different units together.
 Standard library only; runs on Python >= 3.6.
 """
 import argparse
@@ -38,7 +39,8 @@ import machine_config  # noqa: E402  (same directory; works under python -I too)
 
 DEFAULT_REPO = Path(__file__).resolve().parent.parent
 FIELDS = ["JobID", "JobName", "Partition", "State", "ExitCode",
-          "Start", "End", "ElapsedRaw", "AllocCPUS", "NodeList", "WorkDir"]
+          "Start", "End", "ElapsedRaw", "AllocCPUS", "NodeList", "WorkDir", "AllocTRES"]
+UA_PER_GPU_HOUR = 100   # LNCC: 1 UA per CPU core-hour, 100 per GPU-hour (ADR-0017)
 COLUMNS = ["machine", "job_id", "job_name", "partition", "state", "exit_code",
            "start", "end", "elapsed_s", "alloc_cpus", "nodelist", "workdir",
            "cost", "cost_unit", "recorded_at"]
@@ -84,13 +86,28 @@ def is_ended(job):
     return state not in NOT_ENDED and job["End"] not in ("", "Unknown", "None")
 
 
+def alloc_gpus(tres):
+    """GPUs in AllocTRES ('cpu=6,gres/gpu=1,...'); typed gres/gpu:<type> ignored (no double count)."""
+    for item in tres.split(","):
+        key, _, val = item.partition("=")
+        if key == "gres/gpu":
+            return int(val)
+    return 0
+
+
 def estimate(job, unit):
-    if unit != "core-hours":
-        return "unknown"
     try:
-        return "{:.4f}".format(int(job["ElapsedRaw"]) * int(job["AllocCPUS"]) / 3600.0)
+        elapsed, cpus = int(job["ElapsedRaw"]), int(job["AllocCPUS"])
+        if unit == "core-hours":
+            return "{:.4f}".format(elapsed * cpus / 3600.0)
+        if unit == "UA":
+            if elapsed > 0 and not job["AllocTRES"]:
+                return "unknown"          # ran, but no allocation recorded
+            gpus = alloc_gpus(job["AllocTRES"])
+            return "{:.4f}".format(elapsed * (cpus + UA_PER_GPU_HOUR * gpus) / 3600.0)
     except ValueError:
         return "unknown"
+    return "unknown"
 
 
 def default_workdirs(repo):

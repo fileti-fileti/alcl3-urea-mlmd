@@ -13,7 +13,9 @@ Checks and measures:
 - float32 vs float64 on both boxes: |dE| per atom and max |dF|;
 - steps/s of NVT (Bussi) and NPT (Berendsen) on the reactant box after 50 FIRE steps,
   float64 and float32 (20 warm-up steps, then 100 timed), and ns/day at dt = 0.5 fs.
-Writes a JSON report; prints a summary. Exit 1 if a check fails.
+Writes the JSON report after every stage, with the elapsed time and the GPU peak memory of
+the stage, so a job that hits its time limit or runs out of GPU memory still leaves the
+numbers measured so far; prints a summary. Exit 1 if a check fails.
 """
 import argparse
 import importlib.metadata as md
@@ -83,10 +85,20 @@ def main(argv=None):
     ap.add_argument("--seed-L", type=float, required=True)
     ap.add_argument("--seed-ref-e-per-atom", type=float, required=True)
     a = ap.parse_args(argv)
+    t0 = time.perf_counter()
     rep = {"versions": {p: md.version(p) for p in ("torch", "mace-torch", "ase", "numpy")},
            "gpu": torch.cuda.get_device_name(0), "arch_list": torch.cuda.get_arch_list(),
-           "torch_cuda": torch.version.cuda, "checks": {}}
+           "torch_cuda": torch.version.cuda, "checks": {}, "progress": []}
     ok = rep["checks"]
+
+    def save(stage):
+        p = {"stage": stage, "elapsed_s": round(time.perf_counter() - t0, 1),
+             "gpu_peak_mem_GB": round(torch.cuda.max_memory_allocated() / 1e9, 3)}
+        torch.cuda.reset_peak_memory_stats()
+        rep["progress"].append(p)
+        Path(a.o).write_text(json.dumps(rep, indent=1) + "\n")
+        print("done {stage}: {elapsed_s} s, GPU peak {gpu_peak_mem_GB} GB".format(**p), flush=True)
+
     ok["sm_70_in_arch_list"] = "sm_70" in rep["arch_list"]
     ok["model_sha256"] = mlmd.sha256(a.model) == a.sha256
     boxes = {n: mlmd.read_pdb(Path(a.boxes) / "r1.0_{}.pdb".format(n), a.box_L)
@@ -103,13 +115,18 @@ def main(argv=None):
     rep["single"]["seed_r10_mist_float64"], _ = single(seed, c64)
     d = rep["single"]["seed_r10_mist_float64"]["e_per_atom_eV"] - a.seed_ref_e_per_atom
     rep["seed_dE_per_atom_vs_mace_env_eV"] = d
-    ok["seed_matches_mace_env_1e-6_eV_per_atom"] = abs(d) < 1e-6
+    ok["seed_matches_mace_env_1e-6_eV_per_atom"] = bool(abs(d) < 1e-6)   # numpy bool breaks json
     ok["boxes_finite_float64"] = all(rep["single"][n + "_float64"]["finite"] for n in boxes)
+    save("single_float64")
     mini = boxes["reagentes"].copy()
     mini.calc = c64
     FIRE(mini, logfile=None).run(fmax=0.05, steps=50)
     rep["fire50_fmax_eV_A"] = float(np.sqrt((mini.get_forces() ** 2).sum(1).max()))
-    rep["bench"] = {"nvt_float64": bench(mini, c64, "nvt"), "npt_float64": bench(mini, c64, "npt")}
+    save("fire50_float64")
+    rep["bench"] = {"nvt_float64": bench(mini, c64, "nvt")}
+    save("nvt_float64")
+    rep["bench"]["npt_float64"] = bench(mini, c64, "npt")
+    save("npt_float64")
     c32 = calc_for(a.model, "float32")
     for n, at in boxes.items():
         s32, f32 = single(at, c32)
@@ -117,8 +134,11 @@ def main(argv=None):
         rep["single"][n + "_float32_vs_64"] = {
             "dE_per_atom_eV": s32["e_per_atom_eV"] - rep["single"][n + "_float64"]["e_per_atom_eV"],
             "max_dF_eV_A": float(np.abs(f32 - forces[n]).max())}
+    save("single_float32")
     rep["bench"]["nvt_float32"] = bench(mini, c32, "nvt")
+    save("nvt_float32")
     rep["bench"]["npt_float32"] = bench(mini, c32, "npt")
+    save("npt_float32")
     ok["bench_finite"] = all(b["finite"] for b in rep["bench"].values())
     Path(a.o).write_text(json.dumps(rep, indent=1) + "\n")
     print(json.dumps(rep, indent=1))

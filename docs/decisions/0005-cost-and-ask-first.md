@@ -1,5 +1,6 @@
 # 0005. Cost accounting and ask-first limits
-- Status: Accepted (partial)
+- Status: Accepted (partial). SDumont cost unit superseded by
+  [0017](0017-sdumont-cost-unit-ua.md).
 - Date: 2026-11-13. Decided by: owner (Eudes Fileti). Process: infrastructure (approval).
 
 ## Context

@@ -15,7 +15,7 @@ this project.
 | [0002](0002-repositories.md) | Template repo plus one repo per project | Accepted |
 | [0003](0003-sync-mac-hub.md) | Sync through the Mac hub with bare repos | Superseded by 0012 |
 | [0004](0004-locations-and-storage.md) | Repo locations and large-storage symlinks | Accepted (neumann); bare repos and SDumont superseded by 0012 |
-| [0005](0005-cost-and-ask-first.md) | Cost accounting and ask-first limits | Accepted (partial) |
+| [0005](0005-cost-and-ask-first.md) | Cost accounting and ask-first limits | Accepted (partial); SDumont cost unit superseded by 0017 |
 | [0006](0006-language.md) | Language of docs and chat | Accepted |
 | [0007](0007-python-environments.md) | Python environments recorded per machine | Accepted |
 | [0008](0008-legacy-results.md) | Legacy work stays in place; registered as legacy-* | Accepted |
@@ -27,6 +27,7 @@ this project.
 | [0014](0014-sdumont-clone-in-scratch.md) | SDumont clone in /scratch | Accepted |
 | [0015](0015-scope-sites-model-engine.md) | Scope, sites, fixed model and MLMD engine | Accepted |
 | [0016](0016-npt-pressure-relaxation.md) | Short NPT to relax the start-box pressure with a stress-free model | Accepted (protocol, 50 ps); barostat values Proposed |
+| [0017](0017-sdumont-cost-unit-ua.md) | SDumont cost unit: UA from sacct | Accepted |
 
 ## Template
 

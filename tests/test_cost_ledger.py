@@ -9,14 +9,14 @@ from helpers import TempRepo
 # Synthetic `sacct -X -n -P` output in FIELDS order; job IDs and paths are made up.
 # {RUNS} is replaced by the resolved runs/ store of the temp repo.
 SACCT = """\
-101|toy|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T10:01:00|60|1|n09|{RUNS}/toy
-102|fail|batch|FAILED|1:0|2026-01-01T11:00:00|2026-01-01T13:00:00|7200|128|n10|{RUNS}/a/b
-103|cancel|batch|CANCELLED by 1004|0:0|2026-01-01T12:00:00|2026-01-01T12:30:00|1800|64|n11|{RUNS}
-104|run|EPYC_9734|RUNNING|0:0|2026-01-01T12:00:00|Unknown|999|448|n12|{RUNS}/run
-105|wait|batch|PENDING|0:0|Unknown|Unknown|0|0|None assigned|{RUNS}/wait
-106|tout|batch|TIMEOUT|0:0|2026-01-02T00:00:00|2026-01-03T00:00:00|86400|96|n11|{RUNS}/t
-201|other|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|128|n09|/home/u/other-project/run
-202|prefix|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|128|n09|{RUNS}-other/x
+101|toy|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T10:01:00|60|1|n09|{RUNS}/toy|billing=1,cpu=1,node=1
+102|fail|batch|FAILED|1:0|2026-01-01T11:00:00|2026-01-01T13:00:00|7200|128|n10|{RUNS}/a/b|billing=128,cpu=128,node=1
+103|cancel|batch|CANCELLED by 1004|0:0|2026-01-01T12:00:00|2026-01-01T12:30:00|1800|64|n11|{RUNS}|billing=64,cpu=64,node=1
+104|run|EPYC_9734|RUNNING|0:0|2026-01-01T12:00:00|Unknown|999|448|n12|{RUNS}/run|billing=448,cpu=448,node=1
+105|wait|batch|PENDING|0:0|Unknown|Unknown|0|0|None assigned|{RUNS}/wait|
+106|tout|batch|TIMEOUT|0:0|2026-01-02T00:00:00|2026-01-03T00:00:00|86400|96|n11|{RUNS}/t|billing=96,cpu=96,gres/gpu=1,node=1
+201|other|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|128|n09|/home/u/other-project/run|billing=128,cpu=128,node=1
+202|prefix|batch|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|128|n09|{RUNS}-other/x|billing=128,cpu=128,node=1
 """
 
 
@@ -91,6 +91,22 @@ class LedgerTest(unittest.TestCase):
         _, _, new, _ = self.add(machine="sdumont", unit="TODO-unit")
         self.assertTrue(all(r["cost"] == "unknown" for r in new))
 
+    def test_ua_counts_cores_and_gpus(self):
+        # ADR-0017: UA = core-hours + 100 x GPU-hours.
+        _, _, new, _ = self.add(machine="sdumont", unit="UA")
+        cost = {r["job_id"]: r["cost"] for r in new}
+        self.assertEqual(cost["101"], "0.0167")      # CPU job: 60 s x 1 core
+        self.assertEqual(cost["106"], "4704.0000")   # 24 h x (96 cores + 100 x 1 GPU)
+        self.assertTrue(all(r["cost_unit"] == "UA" for r in new))
+
+    def test_ua_gpu_count_and_missing_tres(self):
+        self.assertEqual(cl.alloc_gpus("billing=6,cpu=6,gres/gpu:v100=2,gres/gpu=2,node=1"), 2)
+        self.assertEqual(cl.alloc_gpus(""), 0)
+        ran = {"ElapsedRaw": "60", "AllocCPUS": "6", "AllocTRES": ""}
+        self.assertEqual(cl.estimate(ran, "UA"), "unknown")     # ran, allocation not recorded
+        never = {"ElapsedRaw": "0", "AllocCPUS": "0", "AllocTRES": ""}
+        self.assertEqual(cl.estimate(never, "UA"), "0.0000")    # cancelled while pending
+
     def test_dry_run_writes_nothing(self):
         path, _, new, _ = self.add(dry_run=True)
         self.assertEqual(len(new), 4)
@@ -102,7 +118,7 @@ class LedgerTest(unittest.TestCase):
 
     def test_sum_per_unit_across_machines(self):
         self.add()
-        line = "900|m|sequana_cpu_dev|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|48|x|{}/m\n"
+        line = "900|m|sequana_cpu_dev|COMPLETED|0:0|2026-01-01T10:00:00|2026-01-01T11:00:00|3600|48|x|{}/m|cpu=48\n"
         self.add(machine="sdumont", unit="TODO-unit",
                  text=line.format(os.path.realpath(str(self.repo / "runs"))))
         picked, totals = cl.sum_jobs(self.repo, ["101", "102", "sdumont:900"])
