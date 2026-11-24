@@ -10,9 +10,15 @@ Two references, kept apart. Neither has been judged yet.
 - Coverage on 2026-11-19 (card): AIMD RDF for 20 of the 30 trajectories. Without one then:
   T333 r13_ionB, r15_ionA, r15_ionB, r15_mist; T450 r10_fora, r10_neut, r10_reag,
   r13_neut, r15_neut, r15_reag.
+- The script is in this repo: `src/rdf_aimd_v1/rdf.py` + the owner's `LEIA-ME.md`, copied
+  2026-11-24 from Davi's code snapshot `2ea4809ba93a/third_party/rdf-aimd-v1/` (sha256 equal
+  to the value above). It refuses to run with uncommitted changes and records the commit.
 - Transfer: the owner sends one directory with all AIMD RDFs to SDumont. **The agent asks
   for it when a comparison is due** (status block, Waiting on owner). On arrival:
   `data/inbox/` + sha256, then `scripts/register_result.py legacy-aimd-rdf-reference ...`.
+- A copy of the 20 already exists on SDumont, in Davi's area (seen 2026-11-24, read-only):
+  `/scratch/acmes/davi.fileti/mlff-efficiency-studies/data/raw/alcl3_urea/rdf-aimd-v1/`
+  (csv + json per trajectory and the owner's LEIA-ME). Usable if the owner prefers it.
 - Until then the AIMD curves exist here only as figures:
   `data/models/run2r10m0/plots/<system>.T<T>.png` (AIMD blue, MLMD orange dashed,
   ±2 standard errors, 5 blocks; the title says whether the trajectory was held out).

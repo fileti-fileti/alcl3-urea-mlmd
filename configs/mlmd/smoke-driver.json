@@ -1,0 +1,59 @@
+{
+ "description": "GPU check of src/mlmd.py on the reactant box: every stage kind, one forced checkpoint and resume. A test, not a result.",
+ "model": {
+  "path": "data/models/run2r10m0/alcl3_urea_run2_r10_m0.model",
+  "sha256": "ff0e4578c01cd5ba8d6f08ba35eda9ad27e8d580f50f9085c37222485fd46e3a"
+ },
+ "dtype": "float64",
+ "structure": {
+  "path": "data/boxes/mlmd-boxes-r1.0-v2/r1.0_reagentes.pdb",
+  "box_A": 29.729979
+ },
+ "seed": 1,
+ "min_distance_A": 0.6,
+ "check_every": 50,
+ "ckpt_every": 50,
+ "stages": [
+  {
+   "name": "min",
+   "kind": "minimise",
+   "fmax_eV_A": 0.5,
+   "max_steps": 20
+  },
+  {
+   "name": "ramp",
+   "kind": "nvt",
+   "dt_fs": 0.25,
+   "ps": 0.025,
+   "T_start_K": 100,
+   "T_K": 400,
+   "taut_fs": 10,
+   "thermo_every": 50,
+   "dump_every": 0
+  },
+  {
+   "name": "npt",
+   "kind": "npt_berendsen",
+   "dt_fs": 0.5,
+   "ps": 0.05,
+   "T_K": 400,
+   "taut_fs": 100,
+   "P_bar": 1.0,
+   "taup_fs": 1000,
+   "compressibility_per_bar": 4.5e-05,
+   "mean_volume_last_ps": 0.025,
+   "thermo_every": 50,
+   "dump_every": 0
+  },
+  {
+   "name": "prod",
+   "kind": "nvt",
+   "dt_fs": 0.5,
+   "ps": 0.05,
+   "T_K": 400,
+   "taut_fs": 100,
+   "thermo_every": 50,
+   "dump_every": 50
+  }
+ ]
+}
