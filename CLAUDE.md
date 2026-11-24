@@ -85,13 +85,22 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 - Runs on SDumont. `origin` = private GitHub repo `fileti-fileti/alcl3-urea-mlmd`
   (ADR-0012), ssh alias `github-alcl3-urea-mlmd` (deploy key of this repo and machine):
   pull at `/start-session`, push at `/end-session`.
-- Clone and store in `/scratch/acmes/eudes.fileti3/projects/` (ADR-0014); `/scratch` purge
-  rule unknown: anything irreplaceable also lives elsewhere.
+- Clone and store in `/scratch/acmes/eudes.fileti3/projects/` (ADR-0014). `/scratch` deletes
+  files unmodified for 60 days, no backup; on compute nodes `/prj` is a link to `/scratch`
+  (`$HOME` files invisible to jobs). Both from Davi's HPC guide (2026-10). Anything
+  irreplaceable also lives elsewhere; envs are rebuilt from `envs/`.
+- Cost: UA = 1 per CPU core-hour, 100 per GPU-hour (LNCC manual via Davi's guide): one V100
+  for a day ≈ 2400 UA. Compute nodes cannot install from the internet: wheels come from the
+  login node.
 - Machine facts (paths, partitions, modules, envs, cost unit) live in
   `configs/machines/<machine>.yaml`, never hard-coded; `unknown` = unverified, never guessed
   (`scripts/machine_config.py detect|show|validate`). `neumann.yaml` serves the tests only.
 - `scripts/`: Python standard library only, Python >= 3.6, never the active conda env.
-  Job scripts activate `mace_env` explicitly (path in `sdumont.yaml`).
+  `src/` and its tests run with the MLMD venv: `module load python/3.10.16_sequana; unset
+  PYTHONPATH; <venv>/bin/python -I ...` (venv path and module in `sdumont.yaml`).
+- MLMD jobs: `scripts/prep_mlmd.py <config> --name <run>` writes `runs/<run>/` (run.json +
+  self-resubmitting `job.sbatch`: 1 V100, `-c 6`, 24 h segments, checkpoint at the budget,
+  `--exclude=sdumont8042`); driver `src/mlmd.py` (exit 0 done, 3 resubmit, 4 stopped).
 - SDumont: the login node limits CPU time per process (`ulimit -t 1800`); heavy interactive
   work goes to `salloc`/`srun` on a `*_dev` partition. TODO(owner): confirm usage policy.
 
@@ -146,23 +155,25 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 ## Status
 <!-- BEGIN STATUS -->
 - Updated: 2026-11-24 — sdumont
-- State: on SDumont and GitHub; model run2r10m0 and boxes v2 in the store (sha256 checked);
-  Davi's 30 MLMD RDFs registered; env 0.3.16 not created; no MLMD run; no claims.
+- State: on SDumont and GitHub; model run2r10m0, boxes v2 and the setup-check start in the store
+  (sha256 checked); driver, prep, smoke/bench and RDF comparison written and tested (LJ, CPU);
+  env 0.3.16 rebuilding (job 11758413 TIMEOUT, job 11758427 on `sequana_cpu`); no MLMD run;
+  no claims.
 - Now (SDumont):
-  - Env with mace-torch 0.3.16, torch 2.11.0+cu126, ASE 3.29.0 (outside the repo: ask first); record it in `envs/`.
-  - Smoke + benchmark (ask first; 1 `sequana_gpu_dev` job, 20 min): both boxes, E/F/stress finite, steps/s NVT and NPT, float64 vs float32, compute-node driver.
+  - Job 11758427 (env build): when ended, check `runs/env-mace0316/slurm-env-mace0316-11758427.out` ("lock: identical"), `cost_ledger.py add`, run the tests with the venv.
+  - Smoke + benchmark: `prep_mlmd.py configs/mlmd/smoke-driver.json --name smoke-driver --partition sequana_gpu_dev --time 00:20:00`, then from `runs/smoke-bench/`: `sbatch <repo>/src/smoke_bench.sbatch <repo> <venv>` (owner's ok given).
+  - Setup check (owner's ok given): after the smoke passes, prep and submit `configs/mlmd/setup-r10neut-T400.json` (`--time 01:00:00 --max-chain 2`); RDF, `rdf_compare.py`, apply its rule.
 - Later:
-  - ASE MLMD driver in `src/` with tests: PDB → cell + pbc + wrap, model sha256 check, minimise, NVT ramp, NPT relax, NVT production, minimum-distance stop, checkpoint + self-resubmitting 24 h segments.
-  - Setup check (ask first): repeat Davi's T400 r10_neut MLMD, compare its RDF with `results/legacy-mlmd-rdf-run2r10m0/`.
-  - Pilot experiment doc `docs/experiments/pilot-r10-T400.md` (ADR-0016 protocol, reading rule, pending claim) before the pilot runs.
-  - Census: `extract_species.py` from alcl3-urea (sha256) + a test reproducing a neumann census on one AIMD frame.
+  - Pilot `docs/experiments/pilot-r10-T400.md`: fix the reading rule with the owner, pending claim ID-1, then prep and submit both starts.
+  - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
+  - `cost_ledger.py`: UA conversion (1 per core-hour, 100 per GPU-hour).
+  - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
+  - LAMMPS route (`lammps/10Set25_oneapi-2022_cuda12.6`) only if ASE ns/day is too low (new ADR).
 - Waiting on owner:
-  - Directory with all AIMD RDFs to SDumont: the agent asks when the comparison is due.
-  - `rdf.py` and `extract_species.py`: copies from neumann (`git ls-files` there finds them).
-  - Ok on the proposed NPT values (ADR-0016) and on the Slurm scheme (1 V100, `-c 6`, 24 h self-resubmitting segments).
-  - Reading Davi's area (env, exact MLMD start files) or asking Davi.
-  - Remove the rest of `alcl3_urea_mlip/` (old README, `model/`, `model.zip`, boxes tarball; copies checked).
-  - SDumont cost unit; `/scratch` purge rule.
-- Last sync — sdumont: 2026-11-24, first commit
+  - Pilot reading rule: census quantity, convergence criterion (window, blocks), maximum length; dtype after the benchmark; ok on the ramp and minimiser values.
+  - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
+  - AIMD RDFs: the owner's directory, or the copy in Davi's area (agent asks when the comparison is due).
+  - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
+- Last sync — sdumont: 2026-11-24, end-of-session commit on top of fb85401
 <!-- END STATUS -->

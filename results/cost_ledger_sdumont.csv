@@ -1,0 +1,2 @@
+machine,job_id,job_name,partition,state,exit_code,start,end,elapsed_s,alloc_cpus,nodelist,workdir,cost,cost_unit,recorded_at
+sdumont,11758413,env-mace0316,sequana_cpu_dev,TIMEOUT,0:0,2026-11-24T11:06:35,2026-11-24T11:26:41,1206,4,sdumont6271,/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/env-mace0316,unknown,unknown,2026-11-24T14:30:23+00:00

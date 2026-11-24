@@ -3,10 +3,12 @@
 One line per term.
 
 - **ADR**: Architecture Decision Record, `docs/decisions/NNNN-*.md`; never edited once accepted, only superseded.
-- **AIMD**: ab initio molecular dynamics (here CP2K, PBE-D3(BJ)/DZVP, on neumann); the quantum reference for the MLMD RDFs.
 - **AIMD system labels** (`r10_mist`, `r13_ionA`, `r15_neut`, ...): start seeds of the neumann AIMD; `rNN` is r × 10. TODO(owner): meaning of mist, neut, fora, reag, ion, ionA, ionB.
+- **AIMD**: ab initio molecular dynamics (here CP2K, PBE-D3(BJ)/DZVP, on neumann); the quantum reference for the MLMD RDFs.
 - **Block error**: standard error from contiguous blocks of frames; a lower bound when blocks are shorter than the correlation time.
 - **Census**: count of Al species per frame with the neumann bond criterion (CLAUDE.md, Same model, same census).
+- **Chain**: the self-resubmitting sequence of 24 h jobs of one run (`scripts/prep_mlmd.py`): exit 3 of `src/mlmd.py` (budget reached, checkpoint written) submits the next job, up to `--max-chain`.
+- **Checkpoint**: `state.json` + `ckpt.traj` of a run dir: positions, momenta, cell, step, RNG state; a resumed run continues exactly where it stopped.
 - **Claim**: a statement in `docs/claims.md` with a reading rule fixed before the result.
 - **Committee**: models trained alike with different seeds; their disagreement estimates the model's uncertainty. Not used here (ADR-0015).
 - **CSVR**: canonical sampling through velocity rescaling (Bussi thermostat); used in Davi's MLMD.
@@ -20,5 +22,7 @@ One line per term.
 - **Reading rule**: question, metric, threshold and yes/no/inconclusive, fixed before the result (ADR-0013).
 - **reagentes / ionico**: the two opposite r = 1.0 start boxes: molecular (Al2Cl6 + urea) and fully ionic ([AlCl2(urea)2]+ + AlCl4-).
 - **run2r10m0**: the MACE model of this repo (run 2, round 10, committee member 0; `docs/model.md`).
+- **Setup check**: a repeat of one of Davi's MLMD with our driver and env, its RDF compared with his (`docs/experiments/setup-check-r10neut-T400.md`).
 - **Status block**: the State / Now / Later / Waiting on owner section of `CLAUDE.md` (ADR-0011).
 - **Store**: `../alcl3-urea-mlmd-store/{data,runs,logs}`, outside git, reached through the `data`, `runs`, `logs` symlinks.
+- **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour.

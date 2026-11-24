@@ -14,6 +14,49 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-24 — sdumont — MLMD driver, env rebuild, Davi's area, tests ready
+- Goal: env with mace-torch 0.3.16; ASE MLMD driver with checkpoints and self-resubmitting
+  jobs; smoke/benchmark and setup check ready to submit; Slurm/GPU survey.
+- Done:
+  - `b0d96ee`: env recipe (Davi's lock: torch 2.11.0+cu126, mace-torch 0.3.16, ase 3.29.0),
+    `python.module` in the machine config, purge and UA facts.
+  - Env build job 11758413 (`sequana_cpu_dev`) TIMEOUT at 20 min; partial venv removed;
+    rebuild job 11758427 on `sequana_cpu`, 2 h limit.
+  - `src/mlmd.py` (stages minimise / nvt Bussi with ramp / npt_berendsen with mean-volume
+    rescale; checkpoint + resume; 0.6 Å and non-finite stop), `scripts/prep_mlmd.py` (run dir,
+    provenance, 24 h self-resubmitting job), `src/smoke_bench.py` + `.sbatch`,
+    `src/rdf_compare.py`; tests for each (70 tests pass with the `mace_env` python, ASE 3.28,
+    after fixing one wrong test expectation). Restart test: a run interrupted after every
+    chunk ends identical to the uninterrupted one.
+  - From Davi's area (owner's ok): `src/rdf_aimd_v1/rdf.py` (sha256 `7c710bba…`, equal to
+    the card) and the exact start of his T400 r10_neut MLMD (`data/setup-check/`, sha256
+    `2fe053fe…` = his DONE.json).
+  - Configs `smoke-driver`, `setup-r10neut-T400`; `docs/experiments/setup-check-r10neut-T400.md`
+    (rule fixed before the run) and `pilot-r10-T400.md` (draft, rule pending).
+  - Old tree `alcl3_urea_mlip/` deleted (owner's ok; every file had a checked copy).
+  - Job 11623564 (`pbA2_rep5`, another project, held since 2026-10-24) cancelled at the
+    owner's request.
+- Results: Davi's HPC guide (his code snapshot `2ea4809ba93a`, `docs/hpc-guide.md`): GPU
+  nodes V100-SXM2-32GB, driver 560.35.03; on compute nodes `/prj` is a link to `/scratch`;
+  `/scratch` deletes files unmodified for 60 days; UA = 1 per core-hour, 100 per GPU-hour;
+  compute nodes cannot install from PyPI; SDumont2nd is not open to standard projects;
+  module `lammps/10Set25_oneapi-2022_cuda12.6` has ML-MACE with libtorch 2.11. Davi's T400
+  r10_neut MLMD (job 11750922): 15.33 steps/s, 0.217 h. The 20 AIMD RDFs are also in his
+  area (`docs/rdf-references.md`).
+- Decisions (owner, 2026-11-24, "OK. pra tudo"): env path, smoke job, NPT values of
+  ADR-0016, Slurm scheme (1 V100, `-c 6`, 24 h self-resubmitting segments), reading Davi's
+  area, deleting `alcl3_urea_mlip/`. Agent, for a test: the setup-check rule (4 combined
+  errors, peak shift ≤ 0.04 Å, T 400 ± 5 K).
+- Problems:
+  - Env build 11758413: TIMEOUT on `sequana_cpu_dev`, stalled on the large NVIDIA wheels;
+    Davi's identical build took 5.5 min (2026-10-20). Slow Lustre I/O suspected, not verified.
+  - `/end-session` was not available: this Claude Code session started in `$HOME`, so the
+    repo's skills, CLAUDE.md and `.claude/settings.json` were not loaded. End of session done
+    by hand, following `.claude/skills/end-session/SKILL.md`.
+- Next: open the next session in the repo dir; when 11758427 ends: tests with the venv,
+  `prep_mlmd.py configs/mlmd/smoke-driver.json --name smoke-driver`, submit the smoke job;
+  then the setup check; owner: the pilot's reading rule.
+
 ## 2026-11-24 — sdumont — Project start
 - Goal: create the MLMD project on SDumont around Davi's model; record the model, the
   reference RDFs and the neumann handoff on the start boxes; tidy the old tree.
