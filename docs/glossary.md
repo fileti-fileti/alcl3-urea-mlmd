@@ -23,6 +23,7 @@ One line per term.
 - **reagentes / ionico**: the two opposite r = 1.0 start boxes: molecular (Al2Cl6 + urea) and fully ionic ([AlCl2(urea)2]+ + AlCl4-).
 - **run2r10m0**: the MACE model of this repo (run 2, round 10, committee member 0; `docs/model.md`).
 - **Setup check**: a repeat of one of Davi's MLMD with our driver and env, its RDF compared with his (`docs/experiments/setup-check-r10neut-T400.md`).
+- **Smoke-bench**: the GPU test job `src/smoke_bench.sbatch`: model and env checks, float32 vs float64, steps/s and GPU peak memory per stage on the 1512-atom box, then the driver's checkpoint/resume on `runs/smoke-driver`.
 - **Status block**: the State / Now / Later / Waiting on owner section of `CLAUDE.md` (ADR-0011).
 - **Store**: `../alcl3-urea-mlmd-store/{data,runs,logs}`, outside git, reached through the `data`, `runs`, `logs` symlinks.
-- **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour.
+- **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour; the ledger counts a GPU job as cores + GPUs (ADR-0017).

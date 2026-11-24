@@ -156,17 +156,14 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 <!-- BEGIN STATUS -->
 - Updated: 2026-11-24 — sdumont
 - State: on SDumont and GitHub; model run2r10m0, boxes v2 and the setup-check start in the store
-  (sha256 checked); driver, prep, smoke/bench and RDF comparison written and tested (LJ, CPU);
-  env 0.3.16 rebuilding (job 11758413 TIMEOUT, job 11758427 on `sequana_cpu`); no MLMD run;
-  no claims.
+  (sha256 checked); env `mace0316_env` built (job 11758427, lock identical), 72 tests pass
+  with it; ledger in UA (ADR-0017); smoke + bench job 11758464 running; no MLMD run; no claims.
 - Now (SDumont):
-  - Job 11758427 (env build): when ended, check `runs/env-mace0316/slurm-env-mace0316-11758427.out` ("lock: identical"), `cost_ledger.py add`, run the tests with the venv.
-  - Smoke + benchmark: `prep_mlmd.py configs/mlmd/smoke-driver.json --name smoke-driver --partition sequana_gpu_dev --time 00:20:00`, then from `runs/smoke-bench/`: `sbatch <repo>/src/smoke_bench.sbatch <repo> <venv>` (owner's ok given).
+  - Job 11758464 (smoke + bench, `runs/smoke-bench/`): read `report.json` and `slurm-smoke-bench-11758464.out` (checks, steps/s, ns/day, GPU peak memory per stage, driver rc 3 then 0), `cost_ledger.py add`; a rerun needs `--exclude=sdumont8042` (not in `src/smoke_bench.sbatch`).
   - Setup check (owner's ok given): after the smoke passes, prep and submit `configs/mlmd/setup-r10neut-T400.json` (`--time 01:00:00 --max-chain 2`); RDF, `rdf_compare.py`, apply its rule.
 - Later:
   - Pilot `docs/experiments/pilot-r10-T400.md`: fix the reading rule with the owner, pending claim ID-1, then prep and submit both starts.
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
-  - `cost_ledger.py`: UA conversion (1 per core-hour, 100 per GPU-hour).
   - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
   - LAMMPS route (`lammps/10Set25_oneapi-2022_cuda12.6`) only if ASE ns/day is too low (new ADR).
@@ -175,5 +172,6 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
   - AIMD RDFs: the owner's directory, or the copy in Davi's area (agent asks when the comparison is due).
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
-- Last sync — sdumont: 2026-11-24, end-of-session commit on top of fb85401
+  - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
+- Last sync — sdumont: 2026-11-24, end-of-session commit on top of 92f72b7
 <!-- END STATUS -->

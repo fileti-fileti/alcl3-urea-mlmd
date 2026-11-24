@@ -14,6 +14,47 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-24 — sdumont — Env 0.3.16 ready, ledger in UA, smoke job submitted
+- Goal: finish the env with mace-torch 0.3.16; UA conversion in `cost_ledger.py`; GPU
+  smoke + benchmark on the 1512-atom box.
+- Done:
+  - Env build job 11758427 (`sequana_cpu`) COMPLETED in 6 min 15 s: "lock: identical";
+    torch 2.11.0+cu126 | mace-torch 0.3.16 | ase 3.29.0 | numpy 2.2.6 | cuda build 12.6.
+    Tests with the venv: 70 OK, then 72 OK after this session's changes.
+  - `92f72b7`: `cost_ledger.py` unit UA (ADR-0017), `sdumont.yaml` `cost.unit: UA`, two
+    new tests. Dry run on job 11613155 (another project, 1 GPU, 12 cores): 5.1333 UA
+    (165 s × 112 / 3600). Job 11758427 recorded: 0.4167 UA.
+  - `92f72b7`: `src/smoke_bench.py` writes `report.json` after each of its 7 stages with
+    the elapsed time and the GPU peak memory of the stage. CPU check with LJ in place of
+    MACE (harness in the session scratchpad, not in git): 7 stages written, only the seed
+    check failed (expected with LJ). The check found a `numpy.bool_` in a check result that
+    broke `json.dumps`; fixed with `bool()`.
+  - `runs/smoke-driver/` prepared at `92f72b7`. Smoke + bench job 11758464 submitted from
+    `runs/smoke-bench/` with `--exclude=sdumont8042` on the command line; running on
+    sdumont8090 since 11:58:32 at the end of the session.
+- Results: none (the smoke is a test; its report is read next session).
+- Decisions:
+  - ADR-0017 (owner, 2026-11-24, "Ok para A e B. Prossiga."): SDumont cost in UA =
+    ElapsedRaw × (AllocCPUS + 100 × GPUs) / 3600; GPU jobs count cores + GPUs (upper bound).
+  - Smoke-bench report per stage with GPU peak memory (same answer). Owner: at 1512 atoms
+    both GPU memory and the 20 min wall time of `sequana_gpu_dev` are at risk.
+  - Davi's setup-check box has 432 atoms (`data/setup-check/`), not ~500: ours is 3.5×
+    larger. The setup check stays on his box by design (RDF comparison); the pilot is sized
+    by our 1512-atom benchmark, not by his 15.33 steps/s.
+- Problems:
+  - Ledger row of 11758413 stays `unknown`: written before ADR-0017; the ledger is
+    append-only.
+  - `src/smoke_bench.sbatch` lacks `--exclude=sdumont8042` (the node is in
+    `sequana_gpu_dev`); given on the command line this time, the file is unchanged.
+  - Davi's `docs/hpc-guide.md` not found under
+    `/scratch/acmes/davi.fileti/mlff-efficiency-studies/docs/`; wanted for the UA rule of
+    GPU jobs (TODO(owner) in ADR-0017).
+  - At submission, `sequana_gpu_dev` had 14 nodes draining and 4 drained (sinfo); cause
+    unknown.
+- Next: read job 11758464 (`runs/smoke-bench/report.json` and its Slurm output: checks,
+  steps/s, ns/day, GPU peak memory, driver rc 3 then 0), `cost_ledger.py add`; then the
+  setup check (owner's ok given).
+
 ## 2026-11-24 — sdumont — MLMD driver, env rebuild, Davi's area, tests ready
 - Goal: env with mace-torch 0.3.16; ASE MLMD driver with checkpoints and self-resubmitting
   jobs; smoke/benchmark and setup check ready to submit; Slurm/GPU survey.
