@@ -1,6 +1,7 @@
 # Pilot: r = 1.0, 400 K, two opposite starts (phase 1 approved; reading rule not fixed)
 
-Status: draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
+Status: phase 1 running since 2026-11-25 (jobs 11759186, 11759187; ADR-0018 thermostat).
+Draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
 2026-11-24 ("ok"); it is submitted after the setup check passes. The reading rule is fixed
 after phase 1 and before phase 2 runs, and the pending claim ID-1 enters `docs/claims.md`
 then (CLAUDE.md, Hard rules).
@@ -35,26 +36,29 @@ then (CLAUDE.md, Hard rules).
   (`runs/smoke-bench/report.json`): float32 vs float64 max |ΔF| 1.4e-4 eV/Å on both boxes,
   about 200× below the model's test force error (31.7 meV/Å, `docs/model.md`); ΔE −0.80 and
   −0.78 meV/atom, a near-constant shift; NVT 8.93 vs 6.13 steps/s (1.46×).
-- Protocol (ADR-0016), same for both starts, seeds 1 (reagentes) and 2 (ionico); configs
-  `configs/mlmd/pilot-r10-T400-{reag,ion}.json`:
+- Protocol (ADR-0016, ADR-0018), same for both starts, seeds 1 (reagentes) and 2 (ionico);
+  configs `configs/mlmd/pilot-r10-T400-ou-{reag,ion}.json` (2026-11-25; the global-Bussi
+  version `pilot-r10-T400-{reag,ion}.json`, prepared at `3540181`, never ran):
 
   | Stage | Kind | dt | Length | Thermostat / barostat | Output |
   |---|---|---|---|---|---|
   | min | FIRE, fixed cell | — | fmax 0.05 eV/Å or 2000 steps | — | log |
-  | ramp | NVT Bussi, 100 → 400 K | 0.25 fs | 2 ps | τ_T 10 fs | thermo / 10 fs, frames / 50 fs |
+  | eq | `massive_ou`, 400 K | 0.25 fs | 2 ps | τ_T 10 fs | thermo / 10 fs, frames / 50 fs |
   | npt | NPT Berendsen, 1 bar | 0.5 fs | 50 ps | τ_T 100 fs, τ_P 1 ps, β 4.5e-5 bar⁻¹ | thermo / 10 fs, frames / 100 fs |
-  | prod | NVT Bussi, 400 K | 0.5 fs | 200 ps (phase 1) | τ_T 100 fs | thermo / 10 fs, frames / 10 fs |
+  | prod | `massive_ou`, 400 K | 0.5 fs | 200 ps (phase 1) | τ_T 100 fs | thermo / 10 fs, frames / 10 fs |
 
   Checkpoint every 2000 steps; physical check (finite energy and forces, no pair closer
-  than 0.6 Å) every 20 steps. Ramp and minimiser values: the agent's, owner's ok
-  2026-11-24. Berendsen parameters: ADR-0016, owner's ok 2026-11-24. The NVT box takes the
-  mean NPT volume of its last 25 ps.
+  than 0.6 Å) every 20 steps. Minimiser values: the agent's, owner's ok 2026-11-24. The
+  `eq` stage replaces the Bussi ramp 100 → 400 K (ADR-0018, owner's ok 2026-11-25).
+  Berendsen parameters: ADR-0016, owner's ok 2026-11-24. The NVT box takes the mean NPT
+  volume of its last 25 ps.
 - Frames: about 56 KB each (smoke run); phase-1 `prod.xyz` ≈ 1.1 GB per start (20 001
   frames).
-- Jobs: `scripts/prep_mlmd.py configs/mlmd/pilot-r10-T400-<start>.json --name
+- Jobs: `scripts/prep_mlmd.py configs/mlmd/pilot-r10-T400-ou-<start>.json --name
   pilot-r10-T400-<start> --max-chain 3`; `sequana_gpu`, 1 V100, `-c 6`, 24 h segments that
   checkpoint and resubmit themselves (owner's ok 2026-11-24), `--exclude=sdumont8042`.
-  Submitted after the setup check passes (`docs/experiments/setup-check-r10neut-T400.md`).
+  Submitted 2026-11-25 at commit `0577a54` (owner: "vamos submeter os dois inícios"), after
+  the owner accepted the setup check: jobs 11759186 (reag), 11759187 (ion).
 - Cost estimate, phase 1 (smoke-bench rates, UA per ADR-0017 = 106 UA/h): ≈ 19 h ≈ 2.0k UA
   per start (the NPT stage ≈ 6 h of it), ≈ 4.0k UA for both. The ledger gives the real cost.
 - Census: the neumann criterion (CLAUDE.md, Same model, same census), on every production

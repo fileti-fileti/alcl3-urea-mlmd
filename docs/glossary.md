@@ -29,5 +29,6 @@ One line per term.
 - **Smoke-bench**: the GPU test job `src/smoke_bench.sbatch`: model and env checks, float32 vs float64, steps/s and GPU peak memory per stage on the 1512-atom box, then the driver's checkpoint/resume on `runs/smoke-driver`.
 - **Status block**: the State / Now / Later / Waiting on owner section of `CLAUDE.md` (ADR-0011).
 - **Store**: `../alcl3-urea-mlmd-store/{data,runs,logs}`, outside git, reached through the `data`, `runs`, `logs` symlinks.
+- **Superseded run**: a prepared or finished run dir replaced by a new protocol, moved to `runs/_superseded/<run>-<commit>-<reason>`, never deleted.
 - **Thermostat check**: the test of what cools the N-H stretches under a global Bussi thermostat (`docs/experiments/thermostat-check-r10neut-T400.md`).
 - **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour; the ledger counts a GPU job as cores + GPUs (ADR-0017).

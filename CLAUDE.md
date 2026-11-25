@@ -154,31 +154,26 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 
 ## Status
 <!-- BEGIN STATUS -->
-- Updated: 2026-11-24 — sdumont
-- State: on SDumont and GitHub; model run2r10m0, boxes v2 and the setup-check start in the store
-  (sha256 checked); env `mace0316_env`, 79 tests pass with it; smoke + bench passed; setup check
-  FAILED (job 11758552); thermostat check inconclusive, A holds (jobs 11758819–21; D 11758822
-  running); pilot phase 1 prepared (`runs/pilot-r10-T400-{reag,ion}`, commit 3540181), not
-  submitted; no claims.
+- Updated: 2026-11-25 — sdumont
+- State: on SDumont and GitHub; model run2r10m0, boxes v2, setup-check start in the store (sha256
+  checked); env `mace0316_env`, 82 tests pass with it; engine ASE (LAMMPS benchmark: no);
+  thermostat `massive_ou` (ADR-0018); setup check accepted by the owner; pilot phase 1 running
+  (jobs 11759186 reag, 11759187 ion; commit 0577a54); no claims.
 - Now (SDumont):
-  - Job 11758822 (thermostat check D): `bond_width.py` on its eq/prod (reported, not judged: the rule needs D only if A and B cool), `cost_ledger.py add`.
-  - Setup-check repeat: with the owner's ok, run A (`runs/thermo-r10neut-T400-bussi`, Davi's equilibration) serves as it: RDF + `rdf_compare.py` with the setup-check rule; else a new run.
-  - Register the outputs of both checks (`rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`) once the owner names the globs.
+  - Pilot jobs 11759186/11759187: `eq` end (mlmd.log, eq.thermo.csv temperature, no STOPPED), then NPT volume and production; `bond_width.py` on phase-1 frames; ledger when they end.
+  - Register the setup check, thermostat check and LAMMPS benchmark outputs once the owner names the globs.
 - Later:
-  - Pilot phase 1: submit `runs/pilot-r10-T400-{reag,ion}` after the setup check passes (owner's go; ≈ 4.0k UA); re-prep if the equilibration changes.
   - Pilot phase 2: reading rule + pending claim ID-1 from phase 1, then extend with `prod2` (procedure in the pilot doc).
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
   - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
-  - LAMMPS route (`lammps/10Set25_oneapi-2022_cuda12.6`) or cuequivariance (not installed) if ASE ns/day is too low (new ADR).
+  - GROMACS NNPot for production: evaluate once the collaborator's numbers and wrapper arrive (new ADR if adopted).
 - Waiting on owner:
-  - Run A as the setup-check repeat (ok?).
-  - Pilot equilibration thermostat: agent's proposal `massive_ou` for the ramp (global Bussi from fresh velocities left the N-H stretches cold in the setup check); ADR-0016 amendment or new ADR.
+  - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`).
+  - GROMACS NNPot from the collaborator: model (MACE? size), atoms, GPU, ns/day; export script/wrapper; version and build recipe.
   - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
-  - ns/day threshold that triggers the LAMMPS / cuequivariance route (ASE float32: 0.386 ns/day).
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
-  - AIMD RDFs: the owner's directory, or the copy in Davi's area (read once for r10_neut T400 with the owner's ok).
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-24, end-of-session commit on top of 9e87a3f
+- Last sync — sdumont: 2026-11-25, end-of-session commit on top of 0577a54
 <!-- END STATUS -->

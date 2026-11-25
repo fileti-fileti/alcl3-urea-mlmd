@@ -14,6 +14,44 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-25 — sdumont — Setup accepted, LAMMPS no, ADR-0018, pilot phase 1 submitted
+- Goal: close the setup and thermostat checks, decide the engine, start the pilot.
+- Done:
+  - Thermostat check D (job 11758822) entered in the ledger (41.9583 UA) and its doc.
+  - Setup-check repeat on run A (RDF `r10_neut.T400.mlmd-setupcheck-v2`); `f7051c5`.
+  - LAMMPS benchmark: model converted with `mace_env` (sha256 f64 `2eb828f8…`, f32
+    `22728c15…`); login-node CPU single point equal to ASE within 1.5e-12 eV/atom;
+    `src/lammps_bench.py` (+3 tests), `src/lammps_bench.sbatch`, doc with its rule
+    (`f7051c5`). Job 11759180 failed (all `lmp` rc 127: `libcudart.so.11.0` not found);
+    fixed in `f78bc43` (CUDA 11 runtime path, recorded in `sdumont.yaml`); job 11759182
+    COMPLETED. Ledger 4.6522 + 20.1694 UA.
+  - `0577a54`: ADR-0018 and configs `pilot-r10-T400-ou-{reag,ion}.json`; the Bussi runs
+    prepared at `3540181` moved to `runs/_superseded/`; pilot phase 1 submitted: jobs
+    11759186 (reag), 11759187 (ion), running since about 05:59.
+  - 82 tests OK with the venv.
+- Results:
+  - Setup check v2: **FAIL** by its rule (N-H passes; Al-Al and Cl-H peak positions, C-O
+    4.10 errors, mean T 405.07 K fail); accepted by the owner.
+  - LAMMPS benchmark: **no** (`runs/lammps-bench/report.json`): 1.848 / 2.042 steps/s in
+    f64 / f32 against ASE 6.130 / 8.934; energies and forces match (1.7e-12 eV/atom,
+    8.5e-11 eV/Å).
+- Decisions (owner, 2026-11-25):
+  - Run A as the setup-check repeat ("segue"); setup accepted despite its fail ("Aceita
+    já"), recorded in the setup-check doc with the agent's justification.
+  - LAMMPS benchmark with the 2× limit ("OK"), and its rerun after the library fix ("ok").
+  - Engine stays ASE; thermostat `massive_ou` for equilibration and production (ADR-0018:
+    "sigamos então com ASE e vamos submeter os dois inícios").
+  - GROMACS NNPot (owner's collaborator): the agent read the nightly docs (2027.0-dev):
+    full-system NN and pair lists exist, no MACE wrapper, the 2027 I/O format breaks older
+    exports, not built on SDumont; evaluated in parallel for production once the
+    collaborator sends numbers and the wrapper.
+- Problems:
+  - Job 11759180: compute nodes do not read `$HOME`, hence not the profile that adds the
+    CUDA 11 runtime used by the own LAMMPS build.
+  - Results of the three checks not registered: the owner has not named the globs.
+- Next: check the pilot's `eq` end (log, temperature, no STOPPED), then NPT volume and
+  production; N-H spread on phase-1 frames; register the checks once the globs are named.
+
 ## 2026-11-24 — sdumont — Setup-check fail diagnosed; thermostat check inconclusive (A holds)
 - Goal: find the cause of the setup-check fail before the pilot.
 - Done:

@@ -44,4 +44,20 @@ its MD speed at least twice ASE's, in float64 and in float32?
   committed tree (the job prints the commit).
 
 ## Results
-(pending)
+- Job 11759180 (2026-11-25, commit `f7051c5`): the ASE reference ran; every `lmp` call exited
+  127 (`libcudart.so.11.0: cannot open shared object file`): compute nodes do not read the
+  profile that adds `shared/cuda-links/cuda-11.4/lib64`. Fixed in `f78bc43`; its outputs are
+  in `runs/lammps-bench/failed-11759180/`. 4.6522 UA.
+- Job 11759182 (commit `f78bc43`, sdumont8049, COMPLETED 0:0, 685 s, 20.1694 UA),
+  `runs/lammps-bench/report.json`:
+
+  | | LAMMPS | ASE (smoke bench) | rule |
+  |---|---|---|---|
+  | f64 steps/s | 1.848 | 6.130 | ≥ 12.26 |
+  | f32 steps/s | 2.042 | 8.934 | ≥ 17.87 |
+  | f64 max \|ΔE\|/atom, max \|ΔF\| | 1.7e-12 eV, 8.5e-11 eV/Å | | ≤ 1e-6 eV, ≤ 1e-5 eV/Å |
+
+  f32 against ASE f64 (reported): ΔE/atom 2.1e-6 eV, max |ΔF| 1.5e-4 eV/Å. `lmp` on the GPU
+  (`gpu.log`, up to 5880 MiB).
+- **Reading: no** (match, both speeds below the limit). The engine stays ASE (ADR-0015;
+  ADR-0018 records it).
