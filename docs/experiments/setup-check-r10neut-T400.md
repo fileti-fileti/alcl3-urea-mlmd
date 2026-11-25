@@ -68,3 +68,17 @@ production thermo file:
   stationary (its N-H spread falls during his production); with Davi's equilibration our
   global-Bussi production keeps the expected spread (inconclusive by that test's rule, which
   asks for this check to be repeated with that equilibration).
+- Repeat (v2), 2026-11-25, owner's ok ("segue"): run A of the thermostat check
+  (`runs/thermo-r10neut-T400-bussi`, job 11758819, Davi's equilibration), RDF
+  `r10_neut.T400.mlmd-setupcheck-v2` (`runs/thermo-r10neut-T400-bussi/rdf/compare.json`), the
+  rule above. N-H passes (0.020 Å, 1.42 errors at the peak). Fail: Al-Al peak −0.06 Å, Cl-H
+  peak −0.18 Å (both broad peaks; their g and cn within 0.7 errors), C-O g at the peak 4.10
+  errors; production mean T 405.07 K (5 block means 409.49, 404.57, 406.64, 401.61, 403.00 K;
+  standard error 1.39 K), outside 400 ± 5 K. **Reading: FAIL.**
+- **Owner's decision (2026-11-25, "Aceita já"): the setup is accepted despite the fail; the
+  pilot no longer waits on this check.** Agent's justification: the same start gives the
+  same potential energy in both drivers (−89435.083640 vs −89435.083638 eV), which excludes a
+  wrong cell, unit or model load; the v1 N-H fail is gone with Davi's equilibration; what
+  fails in v2 are positions of broad peaks and two marginal values, from two single 5 ps
+  trajectories that are still relaxing (their potential energy falls in both). Not
+  measured: the run-to-run spread of this rule (a second seed was proposed and declined).

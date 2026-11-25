@@ -70,7 +70,7 @@ dt = 0.5 fs), or neither?
 
 ## Results
 Jobs 11758819 (A), 11758820 (B), 11758821 (C): `sequana_gpu`, COMPLETED 0:0, 871–903 s each,
-run dirs at commit `9e87a3f`; job 11758822 (D) still running at the end of the session.
+run dirs at commit `9e87a3f`; job 11758822 (D): COMPLETED 0:0, 1425 s.
 `bond_width.py` output (`<run>/{eq,prod}.bond_width.json`), N-H std in Å per 1 ps block:
 
 | Run | eq block 5 | prod blocks 1–5 | metric | |
@@ -78,13 +78,15 @@ run dirs at commit `9e87a3f`; job 11758822 (D) still running at the end of the s
 | A, global Bussi | 0.0296 | 0.0279 0.0270 0.0265 0.0271 0.0280 | 0.0280 | holds |
 | B, NVE | 0.0296 | 0.0285 0.0293 0.0301 0.0309 0.0304 | 0.0304 | holds |
 | C, massive_ou τ 100 fs | 0.0296 | 0.0285 0.0298 0.0295 0.0310 0.0293 | 0.0293 | holds |
+| D, global Bussi, dt 0.25 fs | 0.0296 | 0.0277 0.0266 0.0255 0.0255 0.0263 | 0.0263 | not used by the rule |
 
 - **Reading: inconclusive (A holds).** Davi's cooling is not reproduced; the rule sends the
   setup check to a repeat with this equilibration. The three equilibrations are identical
   (same seed).
-- Reported, not judged (production): mean T A 405.07 K, B 467.84 K, C 406.03 K; potential
-  energy per block A −89417.54 → −89423.14 eV, B −89416.36 → −89419.16, C −89415.92 →
-  −89422.18; conserved-energy drift A −0.0032, B −0.0018, C +0.0038 eV/ps.
+- Reported, not judged (production): mean T A 405.07 K, B 467.84 K, C 406.03 K, D 404.28 K;
+  potential energy per block A −89417.54 → −89423.14 eV, B −89416.36 → −89419.16, C
+  −89415.92 → −89422.18; conserved-energy drift A −0.0032, B −0.0018, C +0.0038, D −0.0008
+  eV/ps.
 - Agent's notes, not part of the reading: (1) A's spread dips to 0.0265 Å in block 3 and
   returns, so 1 ps block values of this metric fluctuate more than the 0.0275 Å threshold
   assumed; Davi's 0.0267 Å may be such a dip. (2) The potential energy falls in every run,
