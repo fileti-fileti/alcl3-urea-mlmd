@@ -29,8 +29,10 @@ sha256sum run2r10m0_f64.model-lammps.pt run2r10m0_f32.model-lammps.pt
   "$venv/bin/python" -I "$repo/src/lammps_bench.py" ref . --model "$MODEL" \
     --sha256 ff0e4578c01cd5ba8d6f08ba35eda9ad27e8d580f50f9085c37222485fd46e3a )
 echo "ref rc=$?"
-# 2. LAMMPS, libraries as in the owner's earlier LAMMPS-MACE jobs; GPU processes logged
-export LD_LIBRARY_PATH=$SH/software/libtorch-gpu/lib:$SH/envs/mace_env/lib:${LD_LIBRARY_PATH:-}
+# 2. LAMMPS: libraries of the owner's earlier LAMMPS-MACE jobs plus the CUDA 11 runtime that
+#    the login-node profile adds (compute nodes do not read $HOME, hence not the profile)
+export LD_LIBRARY_PATH=$SH/software/libtorch-gpu/lib:$SH/envs/mace_env/lib:$SH/cuda-links/cuda-11.4/lib64:${LD_LIBRARY_PATH:-}
+if ldd "$LMP" | grep 'not found'; then echo "lmp: missing libraries"; exit 7; fi
 nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader -l 5 > gpu.log 2>&1 &
 smi=$!
 for f in sp_reagentes_f64 sp_ionico_f64 sp_reagentes_f32 sp_ionico_f32 bench_f64 bench_f32; do

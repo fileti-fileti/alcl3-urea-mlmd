@@ -34,6 +34,7 @@ modules:
   gromacs: unknown
   lammps: /scratch/acmes/eudes.fileti3/projects/shared/software/lammps_mace/bin/lmp   # own build, not a module;
                       # needs mace_env/lib and shared/software/libtorch-gpu/lib in LD_LIBRARY_PATH (owner's earlier LAMMPS jobs)
+                      # and shared/cuda-links/cuda-11.4/lib64 (libcudart.so.11.0) in jobs: compute nodes do not read the profile (job 11759180, 2026-11-25)
 python:
   conda_sh: /scratch/acmes/eudes.fileti3/miniconda3/etc/profile.d/conda.sh   # used by the owner's earlier GPU jobs
   module: python/3.10.16_sequana   # base of the venvs; load it at run time and unset PYTHONPATH
