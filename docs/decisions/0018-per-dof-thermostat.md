@@ -1,5 +1,5 @@
 # 0018. One thermostat per degree of freedom (massive_ou) for MLMD equilibration and production
-- Status: Accepted
+- Status: Accepted. NPT stage superseded by [0019](0019-nvt-at-training-density.md).
 - Date: 2026-11-25. Decided by: owner (Eudes Fileti). Process: ADR-0013.
 
 ## Context

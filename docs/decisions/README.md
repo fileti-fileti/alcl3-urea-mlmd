@@ -26,9 +26,10 @@ this project.
 | [0013](0013-lighter-decision-process.md) | Lighter decision process: the owner's ok replaces the teach-back | Accepted |
 | [0014](0014-sdumont-clone-in-scratch.md) | SDumont clone in /scratch | Accepted |
 | [0015](0015-scope-sites-model-engine.md) | Scope, sites, fixed model and MLMD engine | Accepted |
-| [0016](0016-npt-pressure-relaxation.md) | Short NPT to relax the start-box pressure with a stress-free model | Accepted (protocol, 50 ps); barostat values Proposed |
+| [0016](0016-npt-pressure-relaxation.md) | Short NPT to relax the start-box pressure with a stress-free model | Superseded by 0019 |
 | [0017](0017-sdumont-cost-unit-ua.md) | SDumont cost unit: UA from sacct | Accepted |
-| [0018](0018-per-dof-thermostat.md) | One thermostat per degree of freedom (massive_ou) for MLMD | Accepted |
+| [0018](0018-per-dof-thermostat.md) | One thermostat per degree of freedom (massive_ou) for MLMD | Accepted; NPT stage superseded by 0019 |
+| [0019](0019-nvt-at-training-density.md) | NVT at the training density for both starts; no NPT stage | Accepted |
 
 ## Template
 

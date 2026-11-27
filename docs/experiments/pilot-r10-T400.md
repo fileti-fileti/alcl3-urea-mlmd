@@ -1,6 +1,8 @@
 # Pilot: r = 1.0, 400 K, two opposite starts (phase 1 approved; reading rule not fixed)
 
-Status: phase 1 running since 2026-11-25 (jobs 11759186, 11759187; ADR-0018 thermostat).
+Status: phase 1 to rerun under ADR-0019 (NVT at 1.5398 g/cm³, no NPT; owner's ok
+2026-11-27). The first phase 1 (jobs 11759186, 11759187, with NPT) is superseded: see
+First phase 1.
 Draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
 2026-11-24 ("ok"); it is submitted after the setup check passes. The reading rule is fixed
 after phase 1 and before phase 2 runs, and the pending claim ID-1 enters `docs/claims.md`
@@ -36,34 +38,47 @@ then (CLAUDE.md, Hard rules).
   (`runs/smoke-bench/report.json`): float32 vs float64 max |ΔF| 1.4e-4 eV/Å on both boxes,
   about 200× below the model's test force error (31.7 meV/Å, `docs/model.md`); ΔE −0.80 and
   −0.78 meV/atom, a near-constant shift; NVT 8.93 vs 6.13 steps/s (1.46×).
-- Protocol (ADR-0016, ADR-0018), same for both starts, seeds 1 (reagentes) and 2 (ionico);
-  configs `configs/mlmd/pilot-r10-T400-ou-{reag,ion}.json` (2026-11-25; the global-Bussi
-  version `pilot-r10-T400-{reag,ion}.json`, prepared at `3540181`, never ran):
+- Protocol (ADR-0018, ADR-0019), same for both starts, seeds 1 (reagentes) and 2 (ionico);
+  configs `configs/mlmd/pilot-r10-T400-nvt-{reag,ion}.json` (2026-11-27). Superseded:
+  `pilot-r10-T400-ou-{reag,ion}.json` (with NPT, ran as the first phase 1) and the
+  global-Bussi `pilot-r10-T400-{reag,ion}.json` (prepared at `3540181`, never ran):
 
   | Stage | Kind | dt | Length | Thermostat / barostat | Output |
   |---|---|---|---|---|---|
   | min | FIRE, fixed cell | — | fmax 0.05 eV/Å or 2000 steps | — | log |
   | eq | `massive_ou`, 400 K | 0.25 fs | 2 ps | τ_T 10 fs | thermo / 10 fs, frames / 50 fs |
-  | npt | NPT Berendsen, 1 bar | 0.5 fs | 50 ps | τ_T 100 fs, τ_P 1 ps, β 4.5e-5 bar⁻¹ | thermo / 10 fs, frames / 100 fs |
   | prod | `massive_ou`, 400 K | 0.5 fs | 200 ps (phase 1) | τ_T 100 fs | thermo / 10 fs, frames / 10 fs |
 
   Checkpoint every 2000 steps; physical check (finite energy and forces, no pair closer
   than 0.6 Å) every 20 steps. Minimiser values: the agent's, owner's ok 2026-11-24. The
   `eq` stage replaces the Bussi ramp 100 → 400 K (ADR-0018, owner's ok 2026-11-25).
-  Berendsen parameters: ADR-0016, owner's ok 2026-11-24. The NVT box takes the mean NPT
-  volume of its last 25 ps.
+  Every stage runs at L = 29.729979 Å (1.5398 g/cm³); no NPT (ADR-0019, owner's ok
+  2026-11-27).
 - Frames: about 56 KB each (smoke run); phase-1 `prod.xyz` ≈ 1.1 GB per start (20 001
   frames).
-- Jobs: `scripts/prep_mlmd.py configs/mlmd/pilot-r10-T400-ou-<start>.json --name
+- Jobs: `scripts/prep_mlmd.py configs/mlmd/pilot-r10-T400-nvt-<start>.json --name
   pilot-r10-T400-<start> --max-chain 3`; `sequana_gpu`, 1 V100, `-c 6`, 24 h segments that
   checkpoint and resubmit themselves (owner's ok 2026-11-24), `--exclude=sdumont8042`.
-  Submitted 2026-11-25 at commit `0577a54` (owner: "vamos submeter os dois inícios"), after
-  the owner accepted the setup check: jobs 11759186 (reag), 11759187 (ion).
-- Cost estimate, phase 1 (smoke-bench rates, UA per ADR-0017 = 106 UA/h): ≈ 19 h ≈ 2.0k UA
-  per start (the NPT stage ≈ 6 h of it), ≈ 4.0k UA for both. The ledger gives the real cost.
+  First phase 1: submitted 2026-11-25 at commit `0577a54` (owner: "vamos submeter os dois
+  inícios"), jobs 11759186 (reag), 11759187 (ion); superseded (ADR-0019). Rerun: not yet
+  submitted.
+- Cost estimate, phase-1 rerun (UA per ADR-0017 = 106 UA/h; rate 8.2 steps/s, the `eq`
+  stage of the first phase 1 at this density): ≈ 14 h ≈ 1.5k UA per start, one 24 h
+  segment; ≈ 3.0k UA for both. The ledger gives the real cost.
 - Census: the neumann criterion (CLAUDE.md, Same model, same census), on every production
   frame. TODO(owner): `extract_species.py` (sha256) to copy into `src/`, with a test
   reproducing a neumann census.
+
+## First phase 1 (superseded, ADR-0019)
+- Jobs 11759186 (reag), 11759187 (ion): COMPLETED, exit 0, all stages done, no STOPPED
+  (ended 2026-11-25 21:31 and 21:19). Cost (sacct): 1646.5333 and 1624.3028 UA.
+- min: FIRE 756 and 723 steps, converged. `eq` (1.5398 g/cm³), second half: T 399.1 ± 7.3 K
+  and 403.8 ± 7.8 K; pressure over 1–2 ps 6.4 ± 1.1 and 5.9 ± 1.2 kbar.
+- NPT, mean density of the last 25 ps: 1.0869 g/cm³ (reag, still falling) and
+  1.2365 g/cm³ (ion, flat). Production (200 ps at those volumes): T 400.6 and 399.8 K
+  (second half), 11.2 and 11.0 steps/s.
+- Not used: the two starts ran at different volumes, and the rerun's density differs. Data
+  kept in `runs/_superseded/pilot-r10-T400-{reag,ion}/`.
 
 ## Reading rule — TODO(owner): fix after phase 1, before phase 2 runs
 Proposals, to accept or change:

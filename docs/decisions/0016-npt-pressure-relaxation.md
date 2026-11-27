@@ -1,5 +1,6 @@
 # 0016. Short NPT to relax the start-box pressure with a stress-free model
-- Status: Accepted (protocol, NPT length). Barostat and its other parameters: Accepted
+- Status: Superseded by [0019](0019-nvt-at-training-density.md) (2026-11-27). Was: Accepted
+  (protocol, NPT length). Barostat and its other parameters: Accepted
   2026-11-24 (owner's "ok" on the pilot protocol, `docs/experiments/pilot-r10-T400.md`).
 - Date: 2026-11-24. Decided by: owner (Eudes Fileti). Process: ADR-0013.
 
