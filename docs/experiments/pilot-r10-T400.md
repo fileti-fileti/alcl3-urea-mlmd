@@ -1,8 +1,8 @@
 # Pilot: r = 1.0, 400 K, two opposite starts (phase 1 approved; reading rule not fixed)
 
-Status: phase 1 to rerun under ADR-0019 (NVT at 1.5398 g/cm³, no NPT; owner's ok
-2026-11-27). The first phase 1 (jobs 11759186, 11759187, with NPT) is superseded: see
-First phase 1.
+Status: phase-1 rerun under ADR-0019 (NVT at 1.5398 g/cm³, no NPT; owner's ok
+2026-11-27) submitted 2026-11-27 (jobs 11760903 reag, 11760904 ion). The first phase 1
+(jobs 11759186, 11759187, with NPT) is superseded: see First phase 1.
 Draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
 2026-11-24 ("ok"); it is submitted after the setup check passes. The reading rule is fixed
 after phase 1 and before phase 2 runs, and the pending claim ID-1 enters `docs/claims.md`
@@ -60,8 +60,8 @@ then (CLAUDE.md, Hard rules).
   pilot-r10-T400-<start> --max-chain 3`; `sequana_gpu`, 1 V100, `-c 6`, 24 h segments that
   checkpoint and resubmit themselves (owner's ok 2026-11-24), `--exclude=sdumont8042`.
   First phase 1: submitted 2026-11-25 at commit `0577a54` (owner: "vamos submeter os dois
-  inícios"), jobs 11759186 (reag), 11759187 (ion); superseded (ADR-0019). Rerun: not yet
-  submitted.
+  inícios"), jobs 11759186 (reag), 11759187 (ion); superseded (ADR-0019). Rerun: submitted
+  2026-11-27 03:48 at commit `45ca01d`, jobs 11760903 (reag), 11760904 (ion).
 - Cost estimate, phase-1 rerun (UA per ADR-0017 = 106 UA/h; rate 8.2 steps/s, the `eq`
   stage of the first phase 1 at this density): ≈ 14 h ≈ 1.5k UA per start, one 24 h
   segment; ≈ 3.0k UA for both. The ledger gives the real cost.

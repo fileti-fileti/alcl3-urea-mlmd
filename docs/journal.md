@@ -14,6 +14,43 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-27 — sdumont — First phase 1 superseded (NPT expanded the boxes), ADR-0019 NVT, rerun submitted
+- Goal: read the first pilot phase 1 and continue the pilot.
+- Done:
+  - First phase 1, jobs 11759186 (reag) and 11759187 (ion): COMPLETED, exit 0, all stages
+    done, no STOPPED. Ledger 1646.5333 + 1624.3028 UA (`45ca01d`).
+  - ADR-0019 (NVT at 1.5398 g/cm³, no NPT) supersedes ADR-0016 and the NPT stage of
+    ADR-0018. Configs `pilot-r10-T400-nvt-{reag,ion}.json`; the first phase-1 run dirs
+    moved to `runs/_superseded/` (`45ca01d`).
+  - Phase-1 rerun prepared at `45ca01d` and submitted 2026-11-27 03:48: jobs 11760903
+    (reag), 11760904 (ion), PENDING (Priority), Slurm start estimate 2026-11-28 07:35.
+    Run records checked this session: commit, config, box (`MANIFEST.csv`) and model sha256
+    match; stages min / eq / prod, all at L = 29.729979 Å.
+  - This log: the 03:47 session ended without `/end-session`.
+- Results:
+  - First phase 1 (exploration, not judged; pilot doc, First phase 1): `eq` pressure at
+    1.5398 g/cm³ 6.4 ± 1.1 kbar (reag), 5.9 ± 1.2 kbar (ion); the NPT took the boxes to
+    1.0869 g/cm³ (reag, still falling) and 1.2365 g/cm³ (ion), mean of the last 25 ps. Two
+    volumes, two states: the pilot question is ill-posed on these runs (ADR-0019).
+  - Rerun length estimate: ≈ 13.8–14.0 h per start, one 24 h segment, no resubmission.
+    Rate from the first phase-1 `eq` stage at the same density: 8000 steps in 969 s (reag)
+    and 984 s (ion), 8.26 and 8.13 steps/s. End ≈ 2026-11-28 21:30 if the start estimate
+    holds.
+- Decisions:
+  - ADR-0019 (owner, 2026-11-27: "ok, vamos seguir sua recomendacao").
+  - Rerun submission: the owner's ok was given in the 03:47 session; its wording was not
+    recorded. Owner in this session: "submetemos nova rodada de jobs ... Estao submetidos".
+- Problems:
+  - The 03:47 session ended without `/end-session`: `45ca01d` unpushed, no journal entry,
+    status block and pilot doc stale ("Rerun: not yet submitted"). Fixed by this log.
+  - First phase-1 dirs moved to `runs/_superseded/pilot-r10-T400-{reag,ion}/` without the
+    `-<commit>-<reason>` suffix of the glossary convention; left as is (ADR-0019 and the
+    pilot doc cite these paths).
+  - `bond_width.py` not run on the first phase-1 frames (superseded); it moves to the rerun.
+- Next: when the rerun starts, the model sha256 line in `mlmd.log`; then the `eq` end
+  (temperature, no STOPPED), production, `bond_width.py` on the prod frames, ledger at the
+  end; then the reading rule for phase 2.
+
 ## 2026-11-25 — sdumont — Setup accepted, LAMMPS no, ADR-0018, pilot phase 1 submitted
 - Goal: close the setup and thermostat checks, decide the engine, start the pilot.
 - Done:

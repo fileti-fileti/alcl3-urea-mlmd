@@ -154,13 +154,14 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 
 ## Status
 <!-- BEGIN STATUS -->
-- Updated: 2026-11-25 — sdumont
+- Updated: 2026-11-27 — sdumont
 - State: on SDumont and GitHub; model run2r10m0, boxes v2, setup-check start in the store (sha256
   checked); env `mace0316_env`, 82 tests pass with it; engine ASE (LAMMPS benchmark: no);
-  thermostat `massive_ou` (ADR-0018); setup check accepted by the owner; pilot phase 1 running
-  (jobs 11759186 reag, 11759187 ion; commit 0577a54); no claims.
+  thermostat `massive_ou` (ADR-0018); NVT at 1.5398 g/cm³, no NPT (ADR-0019); first phase 1
+  superseded; phase-1 rerun pending (jobs 11760903 reag, 11760904 ion; commit 45ca01d; Slurm
+  start estimate 2026-11-28 07:35, ≈ 14 h each); no claims.
 - Now (SDumont):
-  - Pilot jobs 11759186/11759187: `eq` end (mlmd.log, eq.thermo.csv temperature, no STOPPED), then NPT volume and production; `bond_width.py` on phase-1 frames; ledger when they end.
+  - Rerun jobs 11760903/11760904: model sha256 in mlmd.log, `eq` end (eq.thermo.csv temperature, no STOPPED), production; `bond_width.py` on prod frames; ledger when they end.
   - Register the setup check, thermostat check and LAMMPS benchmark outputs once the owner names the globs.
 - Later:
   - Pilot phase 2: reading rule + pending claim ID-1 from phase 1, then extend with `prod2` (procedure in the pilot doc).
@@ -170,10 +171,13 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
   - GROMACS NNPot for production: evaluate once the collaborator's numbers and wrapper arrive (new ADR if adopted).
 - Waiting on owner:
   - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`).
+  - Register the first phase-1 files ADR-0019 cites (`eq.thermo.csv`, `npt.thermo.csv`, `npt.volume.json`, `mlmd.log` in `runs/_superseded/pilot-r10-T400-*`)?
+  - DFT stress on a few AIMD frames (neumann), to separate the three pressure cases of ADR-0019.
+  - Measured density of AlCl3:urea at r = 1.0 and 400 K, if known (ADR-0019).
   - GROMACS NNPot from the collaborator: model (MACE? size), atoms, GPU, ns/day; export script/wrapper; version and build recipe.
   - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-25, end-of-session commit on top of 0577a54
+- Last sync — sdumont: 2026-11-27, end-of-session commit on top of 45ca01d
 <!-- END STATUS -->

@@ -18,7 +18,7 @@ One line per term.
 - **massive_ou / nve**: stage kinds of `src/mlmd.py`: one Ornstein-Uhlenbeck thermostat per degree of freedom (Davi's massive CSVR), and velocity Verlet without thermostat.
 - **MLMD**: molecular dynamics driven by a machine-learned force field (here MACE).
 - **N-H spread**: standard deviation of the N-H bond lengths per block of frames (`src/bond_width.py`); a thermometer for the N-H stretches (classical value at 400 K ≈ 0.029 Å from the model's curvature).
-- **NPT relaxation**: short NPT stage that only brings the start-box pressure to plausible values; not a measurement (ADR-0016).
+- **NPT relaxation**: short NPT stage that only brings the start-box pressure to plausible values; not a measurement (ADR-0016). Superseded by ADR-0019: no NPT stage.
 - **Pilot phases**: phase 1 = the first 200 ps of production, exploration, never judged; phase 2 = its extension (`prod2`), judged by the reading rule fixed between the phases (`docs/experiments/pilot-r10-T400.md`).
 - **r**: AlCl3:urea molar ratio (r = 1.3: 39 Al per 30 urea in the AIMD seed).
 - **rdf-aimd-v1**: the owner's test comparing MLMD and AIMD RDFs (`docs/rdf-references.md`).
@@ -31,4 +31,5 @@ One line per term.
 - **Store**: `../alcl3-urea-mlmd-store/{data,runs,logs}`, outside git, reached through the `data`, `runs`, `logs` symlinks.
 - **Superseded run**: a prepared or finished run dir replaced by a new protocol, moved to `runs/_superseded/<run>-<commit>-<reason>`, never deleted.
 - **Thermostat check**: the test of what cools the N-H stretches under a global Bussi thermostat (`docs/experiments/thermostat-check-r10neut-T400.md`).
+- **Training density**: 1.5398 g/cm³ at r = 1.0 (L = 29.729979 Å for 1512 atoms), the density of the training data, of the AIMD and of the v2 boxes; every MLMD stage runs at it (ADR-0019).
 - **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour; the ledger counts a GPU job as cores + GPUs (ADR-0017).
