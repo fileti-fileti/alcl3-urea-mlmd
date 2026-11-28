@@ -19,8 +19,9 @@ conventions only. Keep it under ~160 lines; history goes to `docs/journal.md`.
 - Model (fixed, ADR-0015): `run2r10m0`, `data/models/run2r10m0/alcl3_urea_run2_r10_m0.model`,
   sha256 `ff0e4578…6e3a` (full hash and card: `docs/model.md`). Energies and forces only,
   no stress: NPT only as a short pressure relaxation, never for production (ADR-0016).
-- Start boxes: `data/boxes/mlmd-boxes-r1.0-v2/` (r = 1.0, 1512 atoms; sha256 checked
-  2026-11-24; handoff `docs/handoffs/2026-11-24-neumann-mlmd-boxes.md`). Use
+- Start boxes (r = 1.0, 1512 atoms): `data/boxes/mlmd-boxes-r1.0-v2/` (reagentes, ionico;
+  sha256 checked 2026-11-24) and `data/boxes/mlmd-boxes-r1.0-neutro-v2/` (neutro; 2026-11-28);
+  handoffs in `docs/handoffs/`. Use
   L = 29.729979 Å, not the rounded CRYST1. Never the v1 boxes (`08_mlmd_boxes`).
 - Quality references (AIMD RDFs, the model's own MLMD RDFs): `docs/rdf-references.md`.
 - Engine: ASE + mace-torch 0.3.16 in a dedicated env (to create; ADR-0015), `mace_env`

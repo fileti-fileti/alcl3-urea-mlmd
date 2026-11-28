@@ -1,8 +1,11 @@
-# Pilot: r = 1.0, 400 K, two opposite starts (phase 1 approved; reading rule not fixed)
+# Pilot: r = 1.0, 400 K, three starts (phase 1 approved; reading rule not fixed)
 
 Status: phase-1 rerun under ADR-0019 (NVT at 1.5398 g/cm³, no NPT; owner's ok
 2026-11-27) submitted 2026-11-27 (jobs 11760903 reag, 11760904 ion). The first phase 1
 (jobs 11759186, 11759187, with NPT) is superseded: see First phase 1.
+Neutral start added 2026-11-28 (owner: "vamos tentar 2"; third start, reag and ion kept:
+owner's "Ok" to this change, 2026-11-28), box from neumann
+(`docs/handoffs/2026-11-28-neumann-neutro-box.md`); its phase 1 runs alone.
 Draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
 2026-11-24 ("ok"); it is submitted after the setup check passes. The reading rule is fixed
 after phase 1 and before phase 2 runs, and the pending claim ID-1 enters `docs/claims.md`
@@ -10,8 +13,9 @@ then (CLAUDE.md, Hard rules).
 
 ## Question
 1. Throughput (ns/day) and stability of 1512-atom MLMD with run2r10m0 on one V100.
-2. Starting from the molecular box (Al2Cl6 + urea) and from the fully ionic box
-   ([AlCl2(urea)2]+ + AlCl4-) at r = 1.0 and 400 K, do the two runs reach the same Al
+2. Starting from the molecular box (Al2Cl6 + urea), the fully ionic box
+   ([AlCl2(urea)2]+ + AlCl4-) and the neutral box ([AlCl3(urea)]) at r = 1.0 and 400 K,
+   do the runs reach the same Al
    speciation, and after how long? That time sizes the production matrix (handoff
    2026-11-24).
 
@@ -32,14 +36,16 @@ then (CLAUDE.md, Hard rules).
   The `run.json` edit goes in the journal (its `provenance` describes the original config).
 
 ## Design
-- Boxes: `data/boxes/mlmd-boxes-r1.0-v2/r1.0_{reagentes,ionico}.pdb`, L = 29.729979 Å
-  (1.5398 g/cm³, experimental at 333 K).
+- Boxes: `data/boxes/mlmd-boxes-r1.0-v2/r1.0_{reagentes,ionico}.pdb` and
+  `data/boxes/mlmd-boxes-r1.0-neutro-v2/r1.0_neutro.pdb`, L = 29.729979 Å (1.5398 g/cm³,
+  extrapolated to r = 1.0 from 333 K measurements: Carrasco-Busturia et al. 2021, Liu et al. 2017).
 - Model run2r10m0, float32 (owner's ok 2026-11-24). Smoke-bench job 11758464
   (`runs/smoke-bench/report.json`): float32 vs float64 max |ΔF| 1.4e-4 eV/Å on both boxes,
   about 200× below the model's test force error (31.7 meV/Å, `docs/model.md`); ΔE −0.80 and
   −0.78 meV/atom, a near-constant shift; NVT 8.93 vs 6.13 steps/s (1.46×).
-- Protocol (ADR-0018, ADR-0019), same for both starts, seeds 1 (reagentes) and 2 (ionico);
-  configs `configs/mlmd/pilot-r10-T400-nvt-{reag,ion}.json` (2026-11-27). Superseded:
+- Protocol (ADR-0018, ADR-0019), the same for every start, seeds 1 (reagentes), 2 (ionico)
+  and 3 (neutro); configs `configs/mlmd/pilot-r10-T400-nvt-{reag,ion,neut}.json`
+  (neut: 2026-11-28). Superseded:
   `pilot-r10-T400-ou-{reag,ion}.json` (with NPT, ran as the first phase 1) and the
   global-Bussi `pilot-r10-T400-{reag,ion}.json` (prepared at `3540181`, never ran):
 
