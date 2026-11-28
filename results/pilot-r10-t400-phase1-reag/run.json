@@ -1,0 +1,64 @@
+{
+ "description": "Pilot r = 1.0, 400 K, molecular start (Al2Cl6 + urea): phase 1, production 0-200 ps (exploration, not judged); NVT at the training density 1.5398 g/cm3, no NPT (ADR-0019); per-degree-of-freedom thermostat (ADR-0018); docs/experiments/pilot-r10-T400.md.",
+ "model": {
+  "path": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/data/models/run2r10m0/alcl3_urea_run2_r10_m0.model",
+  "sha256": "ff0e4578c01cd5ba8d6f08ba35eda9ad27e8d580f50f9085c37222485fd46e3a"
+ },
+ "dtype": "float32",
+ "structure": {
+  "path": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/data/boxes/mlmd-boxes-r1.0-v2/r1.0_reagentes.pdb",
+  "box_A": 29.729979
+ },
+ "seed": 1,
+ "min_distance_A": 0.6,
+ "check_every": 20,
+ "ckpt_every": 2000,
+ "stages": [
+  {
+   "name": "min",
+   "kind": "minimise",
+   "fmax_eV_A": 0.05,
+   "max_steps": 2000
+  },
+  {
+   "name": "eq",
+   "kind": "massive_ou",
+   "dt_fs": 0.25,
+   "ps": 2.0,
+   "T_K": 400,
+   "taut_fs": 10,
+   "thermo_every": 40,
+   "dump_every": 200
+  },
+  {
+   "name": "prod",
+   "kind": "massive_ou",
+   "dt_fs": 0.5,
+   "ps": 200.0,
+   "T_K": 400,
+   "taut_fs": 100,
+   "thermo_every": 20,
+   "dump_every": 20
+  }
+ ],
+ "provenance": {
+  "commit": "45ca01d73ee63d94e31b666c41fa63a3e270a21c",
+  "config": "configs/mlmd/pilot-r10-T400-nvt-reag.json",
+  "config_sha256": "c70365db8d0aae9ec3d3607dde46d6f064c827870707fbda0c8dd42fceae8fd0",
+  "structure_sha256": "dd885471a19132dea787ae16cd60253108450f82a7b7f2e3a7794361e242d161",
+  "machine": "sdumont",
+  "host": "sdumont18",
+  "created": "2026-11-27T03:48:00",
+  "slurm": {
+   "partition": "sequana_gpu",
+   "time": "1-00:00:00",
+   "cpus": 6,
+   "mem": "32G",
+   "max_chain": 3,
+   "exclude": "sdumont8042",
+   "margin_s": 600
+  },
+  "env": "/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env",
+  "module": "python/3.10.16_sequana"
+ }
+}

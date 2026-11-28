@@ -14,6 +14,79 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-28 — sdumont — Pilot phase 1 done; urea proton transfer in the reag start, also in the AIMD
+- Goal: check the phase-1 rerun, the N-H spread, and the cause of the broken N-H pairs.
+- Done:
+  - Phase-1 rerun jobs 11760903 (reag) and 11760904 (ion): COMPLETED, exit 0, DONE, no
+    STOPPED, model sha256 checked at start, one 24 h segment each (elapsed 13:31:06 and
+    13:09:14). Ledger 1432.9433 + 1394.3122 UA.
+  - Registered `results/pilot-r10-t400-phase1-{reag,ion}` (6 and 5 files, `--check` OK).
+    `prod.thermo.csv` (2.7 MB, over 1 MiB) stays in the store.
+  - `src/bond_width.py` on the reag `prod.xyz` (`prod.bond_width.json`, registered).
+  - Proton-transfer diagnosis with scratch scripts, not in the repo, so the numbers below are
+    not registered. Data: our prod runs, the first phase 1, the setup check, and Davi's area
+    (read-only): the AIMD copy `data/raw/alcl3_urea/dataset_AlCl3urea_AIMD/`, his 30 MLMD
+    `runs/rdf/alcl3_urea/run2r10m0/`, and the round-10 `train.xyz` / `valid.xyz`.
+  - Our model is Davi's `runs/al/alcl3_al/run2/round_010/train/member_0/m0_stagetwo.model`
+    (sha256 starts `ff0e4578c01c`). Committee siblings `m1_stagetwo` (`980e067d8e27…`) and
+    `m2_stagetwo` (`133f7c53c1bb…`): prefixes only, full hashes not recorded.
+  - Literature search; sources below.
+- Results (exploration, not judged):
+  - Temperature, second half: `eq` 399.1 ± 7.2 K (reag), 403.8 ± 7.8 K (ion); prod
+    399.5 ± 8.3 K (reag), 400.1 ± 8.3 K (ion, up to 191 ps). 8.58 and 8.76 steps/s.
+  - N-H spread, reag prod: `bond_width.py` std 0.38–0.56 Å per 40 ps block. This is not a
+    temperature: the frame-0 pairs break when H moves. Intact pairs: 0.030–0.031 Å (frames
+    0–20000, every 5000), as in the thermostat check (0.0285, 0.0298 Å).
+  - Urea proton transfer (glossary). Reag prod: from frame 4 (40 fs), in 19 776 of 20 001
+    frames, up to 6 pairs; 4 ureates and 4 uroniums from 50 ps on, none reverses. Ion prod:
+    0 of 20 001 frames. First phase 1, reag: 7 pairs, already at the prod start; ion: 0.
+    Setup check (r10_neut, 5 ps): 0.
+  - Mechanism, last frames: every 3-H urea bonds Al through N and O, and every 5-H urea is
+    free. The same holds in AIMD T400 r10_reag (frame 1000). Free ureas: reag 80/126 at the
+    prod start and 32 (+4 uronium) at 200 ps; ion 0/126 (all O-bound at 200 ps).
+  - AIMD, 30 runs: transfer in all six `reag` starts (T400/T450 × r10/r13/r15, up to 3
+    pairs) and in 2 frames of T400 r10_fora; none in ion, neut or mist. Free ureas in the
+    AIMD: reag 21/36, fora 10–11, ion and neut 0.
+  - Davi's MLMD (30 runs, 5 ps): transfer in 10 of the 60 eq/prod files, all `reag`.
+    Committee `sigma_max` in the reag runs is the same with and without O-H frames
+    (T400 r10_reag median 0.0149 and 0.0148 eV/Å); medians of the reag runs 0.0128–0.0189 eV/Å,
+    against 0.0067 (T400 r10_neut) and 0.0065 (T400 r10_ion).
+  - Training data (round 10, member 0), DFT-labelled frames with these species: 235 MLMD and
+    35 AIMD-reag frames in train, 23 and 7 in valid.
+  - Literature: nothing found that reports or excludes proton transfer in AlCl3:urea. The one
+    AIMD of the system, Carrasco-Busturia et al., ChemSusChem 14, 2034 (2021),
+    doi:10.1002/cssc.202100163, was read as an abstract only (cluster exchange, AlCl4-; no
+    protons in the abstract). Precedents: Brønsted acidity induced by Lewis-acid coordination
+    (Dalton Trans. 2017, c7dt00777a); urea's most basic site is O; PBE-D3 spurious proton
+    transfer in acid–base co-crystals (LeBlanc et al., Angew. Chem. 2018,
+    doi:10.1002/anie.201809381).
+- Decisions:
+  - Owner 2026-11-28: census on the neumann trajectories and DFT single points on hold
+    ("esqueça 1 e 3 por enquanto"); focus on the comparison with Davi's runs and on the
+    literature.
+  - Owner's idea, to drop these events from the dataset and retrain: the agent advised
+    against. The events are not rare; the MD still visits those configurations, so the model
+    would extrapolate there; the AIMD comparison would break; dropping data for its outcome
+    is selection bias; training is out of scope (ADR-0015). Alternative: test the transfer
+    with a hybrid functional, then Δ-learning or fine-tuning if needed. Owner: no decision yet.
+  - Register the phase-1 small files now (owner: "Registrar agora").
+- Problems:
+  - `bond_width.py` assumes the frame-0 bonds stay intact; with proton transfer its std is
+    not a thermometer. Fix proposed (pairs beyond the cut reported apart, std of intact
+    pairs), not applied.
+  - The Slurm start estimate (2026-11-28 07:35) was about 26 h late: the jobs started
+    2026-11-27 05:07 and 10:15. The end estimate in the 2026-11-27 entry is wrong.
+  - Scratch scripts and their outputs live only in the scratchpad.
+  - The proposed committee check (m1/m2 on our frames) conflicts with ADR-0015 ("No
+    committee: member 0 only"); it needs a new ADR and the owner's ok. Reading the
+    `sigma_max` Davi logged is not a use of the committee here.
+  - Fetches refused (ChemRxiv, Wiley, Southampton eprints: 403; PubMed: cookies).
+  - Free urea differs between the starts after 200 ps (reag 32, ion 0): the urea binding has
+    not converged, and the phase-2 reading rule must count free urea, ureate and uronium.
+- Next: urea scan into `src/` with a test (diff first); committee check once a new ADR
+  allows it; the owner reads the Carrasco-Busturia full text; decision on the
+  dataset idea; reading rule for phase 2.
+
 ## 2026-11-27 — sdumont — First phase 1 superseded (NPT expanded the boxes), ADR-0019 NVT, rerun submitted
 - Goal: read the first pilot phase 1 and continue the pilot.
 - Done:

@@ -1,0 +1,52 @@
+{
+  "name": "pilot-r10-t400-phase1-ion",
+  "registered_at": "2026-11-28T09:34:26+00:00",
+  "machine": "sdumont",
+  "hostname": "sdumont18",
+  "repo_commit": "c33e958286112fc1741b2068158825a9c3c4393b",
+  "source_dir": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion",
+  "patterns": [
+    "mlmd.log",
+    "run.json",
+    "eq.thermo.csv",
+    "min.fire.log",
+    "slurm-*.out"
+  ],
+  "files": [
+    {
+      "path": "eq.thermo.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion/eq.thermo.csv",
+      "sha256": "ebaecadabf8398543c0d669a95d0b963b4860fe5365bfa3b81bcee53c3ebb252",
+      "bytes": 27137,
+      "source_mtime": "2026-11-27T13:34:45+00:00"
+    },
+    {
+      "path": "min.fire.log",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion/min.fire.log",
+      "sha256": "e7dc6fc71a5f3665fa6a2d78e15ad6f65fdaf5ccbeeb6728dfb67eb73c3d64a8",
+      "bytes": 37698,
+      "source_mtime": "2026-11-27T13:19:36+00:00"
+    },
+    {
+      "path": "mlmd.log",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion/mlmd.log",
+      "sha256": "d34d6a2e53b77f0e2110295edd5d7a59366fdfce55b4092011b3c01f2e3f4b79",
+      "bytes": 485,
+      "source_mtime": "2026-11-28T02:24:25+00:00"
+    },
+    {
+      "path": "run.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion/run.json",
+      "sha256": "e5b971cd9146393d966bd8fbc2135a9b6060316f6aad58f28b7c86faacc51673",
+      "bytes": 1856,
+      "source_mtime": "2026-11-27T06:48:00+00:00"
+    },
+    {
+      "path": "slurm-pilot-r10-T400-ion-11760904.out",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-ion/slurm-pilot-r10-T400-ion-11760904.out",
+      "sha256": "e84910cd38140f39f90bb7e1985ee5977da5902c0a83544dc96717d38ce17922",
+      "bytes": 1779,
+      "source_mtime": "2026-11-28T02:24:57+00:00"
+    }
+  ]
+}

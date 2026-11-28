@@ -1,0 +1,40 @@
+{
+ "pair": "N-H",
+ "cut_A": 1.2,
+ "bonds": 503,
+ "frames": 20001,
+ "blocks": [
+  {
+   "first_frame": 0,
+   "last_frame": 4000,
+   "std_A": 0.38346496978304395,
+   "mean_A": 1.0586845923783716
+  },
+  {
+   "first_frame": 4001,
+   "last_frame": 8000,
+   "std_A": 0.4391351180109184,
+   "mean_A": 1.0690133145570433
+  },
+  {
+   "first_frame": 8001,
+   "last_frame": 12000,
+   "std_A": 0.5131796544169791,
+   "mean_A": 1.0778610954177634
+  },
+  {
+   "first_frame": 12001,
+   "last_frame": 16000,
+   "std_A": 0.543980332182682,
+   "mean_A": 1.0805242536971256
+  },
+  {
+   "first_frame": 16001,
+   "last_frame": 20000,
+   "std_A": 0.5566008850846537,
+   "mean_A": 1.0807719767077764
+  }
+ ],
+ "traj": "runs/pilot-r10-T400-reag/prod.xyz",
+ "box_A": 29.729979
+}

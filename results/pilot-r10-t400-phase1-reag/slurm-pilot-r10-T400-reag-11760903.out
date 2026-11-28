@@ -1,0 +1,22 @@
+job=11760903 chain=0 node=sdumont8013 start=2026-11-27T05:07:02-03:00
+Tesla V100-SXM2-32GB, 560.35.03
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+WARNING:root:Default dtype float32 does not match model dtype float64, converting models to float32.
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+[2026-11-27T05:09:42] start: 1512 atoms, L = 29.729979 A, model sha256 checked
+[2026-11-27T05:09:42] min: minimise stage
+[2026-11-27T05:11:37] min: FIRE 774 steps, fmax 0.0500 eV/A, converged=True
+[2026-11-27T05:11:38] min: done
+[2026-11-27T05:11:38] eq: massive_ou stage
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/src/mlmd.py:310: DeprecationWarning: Use thermalize_momenta
+  MaxwellBoltzmannDistribution(atoms, temperature_K=t_at(0), rng=rng)
+[2026-11-27T05:11:38] eq: Maxwell-Boltzmann velocities at 400.0 K
+[2026-11-27T05:27:07] eq: done
+[2026-11-27T05:27:07] prod: massive_ou stage
+[2026-11-27T18:37:39] prod: done
+[2026-11-27T18:37:39] all stages done
+mlmd rc=0 end=2026-11-27T18:38:07-03:00
+all stages done

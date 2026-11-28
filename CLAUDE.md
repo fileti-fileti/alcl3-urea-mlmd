@@ -154,30 +154,31 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 
 ## Status
 <!-- BEGIN STATUS -->
-- Updated: 2026-11-27 — sdumont
+- Updated: 2026-11-28 — sdumont
 - State: on SDumont and GitHub; model run2r10m0, boxes v2, setup-check start in the store (sha256
   checked); env `mace0316_env`, 82 tests pass with it; engine ASE (LAMMPS benchmark: no);
-  thermostat `massive_ou` (ADR-0018); NVT at 1.5398 g/cm³, no NPT (ADR-0019); first phase 1
-  superseded; phase-1 rerun pending (jobs 11760903 reag, 11760904 ion; commit 45ca01d; Slurm
-  start estimate 2026-11-28 07:35, ≈ 14 h each); no claims.
+  thermostat `massive_ou` (ADR-0018); NVT at 1.5398 g/cm³, no NPT (ADR-0019); pilot phase 1
+  done (jobs 11760903 reag, 11760904 ion; commit 45ca01d; `results/pilot-r10-t400-phase1-*`);
+  urea proton transfer in the reag start, also in the AIMD reag runs (journal 2026-11-28); no claims.
 - Now (SDumont):
-  - Rerun jobs 11760903/11760904: model sha256 in mlmd.log, `eq` end (eq.thermo.csv temperature, no STOPPED), production; `bond_width.py` on prod frames; ledger when they end.
+  - Urea H-count scan into `src/` + test (diff first); register its outputs (our runs, AIMD copy, Davi's MLMD).
   - Register the setup check, thermostat check and LAMMPS benchmark outputs once the owner names the globs.
 - Later:
-  - Pilot phase 2: reading rule + pending claim ID-1 from phase 1, then extend with `prod2` (procedure in the pilot doc).
+  - `bond_width.py`: report pairs beyond the cut apart and the std of intact pairs (+ test).
+  - Pilot phase 2: reading rule (counts free urea, ureate, uronium) + pending claim ID-1, then `prod2` (pilot doc).
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
   - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
   - GROMACS NNPot for production: evaluate once the collaborator's numbers and wrapper arrive (new ADR if adopted).
 - Waiting on owner:
-  - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`).
-  - Register the first phase-1 files ADR-0019 cites (`eq.thermo.csv`, `npt.thermo.csv`, `npt.volume.json`, `mlmd.log` in `runs/_superseded/pilot-r10-T400-*`)?
-  - DFT stress on a few AIMD frames (neumann), to separate the three pressure cases of ADR-0019.
-  - Measured density of AlCl3:urea at r = 1.0 and 400 K, if known (ADR-0019).
+  - Proton transfer: real or PBE-D3? Full text of Carrasco-Busturia et al. 2021 (doi:10.1002/cssc.202100163, paywalled); dataset idea (agent advised against); census on neumann AIMD and DFT single points on hold.
+  - Committee check (Davi's round-10 `m1_stagetwo`/`m2_stagetwo` vs m0 on our reag frames, σ against Davi's MLMD): ADR-0015 says "no committee"; ok for a new ADR allowing one-off committee diagnostics?
+  - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`) and the first phase-1 files ADR-0019 cites (`runs/_superseded/pilot-r10-T400-*`).
+  - ADR-0019 TODOs: DFT stress on a few AIMD frames (neumann); measured density at r = 1.0 and 400 K.
   - GROMACS NNPot from the collaborator: model (MACE? size), atoms, GPU, ns/day; export script/wrapper; version and build recipe.
   - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
-  - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it).
+  - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it); does it classify ureate and uronium?
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-27, end-of-session commit on top of 45ca01d
+- Last sync — sdumont: 2026-11-28, end-of-session commit on top of c33e958
 <!-- END STATUS -->

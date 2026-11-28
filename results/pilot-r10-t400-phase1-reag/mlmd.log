@@ -1,0 +1,10 @@
+[2026-11-27T05:09:42] start: 1512 atoms, L = 29.729979 A, model sha256 checked
+[2026-11-27T05:09:42] min: minimise stage
+[2026-11-27T05:11:37] min: FIRE 774 steps, fmax 0.0500 eV/A, converged=True
+[2026-11-27T05:11:38] min: done
+[2026-11-27T05:11:38] eq: massive_ou stage
+[2026-11-27T05:11:38] eq: Maxwell-Boltzmann velocities at 400.0 K
+[2026-11-27T05:27:07] eq: done
+[2026-11-27T05:27:07] prod: massive_ou stage
+[2026-11-27T18:37:39] prod: done
+[2026-11-27T18:37:39] all stages done

@@ -1,0 +1,60 @@
+{
+  "name": "pilot-r10-t400-phase1-reag",
+  "registered_at": "2026-11-28T09:34:26+00:00",
+  "machine": "sdumont",
+  "hostname": "sdumont18",
+  "repo_commit": "c33e958286112fc1741b2068158825a9c3c4393b",
+  "source_dir": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag",
+  "patterns": [
+    "mlmd.log",
+    "run.json",
+    "eq.thermo.csv",
+    "min.fire.log",
+    "slurm-*.out",
+    "prod.bond_width.json"
+  ],
+  "files": [
+    {
+      "path": "eq.thermo.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/eq.thermo.csv",
+      "sha256": "9807cbd299c5b5ac7653409ae3ebb1f2c0ec0f1e738743d4c7f93e0c9320cdc1",
+      "bytes": 27125,
+      "source_mtime": "2026-11-27T08:27:07+00:00"
+    },
+    {
+      "path": "min.fire.log",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/min.fire.log",
+      "sha256": "860c82beaa52eba48317b6cee0578afa7bc6b24375739ab16c066f51aa88f3e0",
+      "bytes": 40350,
+      "source_mtime": "2026-11-27T08:11:37+00:00"
+    },
+    {
+      "path": "mlmd.log",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/mlmd.log",
+      "sha256": "1a00be1fe9e076f1fc270a92527e7deadac1cdeeb9a88ce4e49d41d251861dfb",
+      "bytes": 485,
+      "source_mtime": "2026-11-27T21:37:39+00:00"
+    },
+    {
+      "path": "prod.bond_width.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/prod.bond_width.json",
+      "sha256": "da71823d0f83c4c6b443395faa8e6206f04fc90dd46b60c7e41cb19e06a68f75",
+      "bytes": 751,
+      "source_mtime": "2026-11-28T02:00:17+00:00"
+    },
+    {
+      "path": "run.json",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/run.json",
+      "sha256": "00254f4abd543933cd8617dfcb3ae79a0897bdf1632b97c0288cdee26a6c3a2e",
+      "bytes": 1853,
+      "source_mtime": "2026-11-27T06:48:00+00:00"
+    },
+    {
+      "path": "slurm-pilot-r10-T400-reag-11760903.out",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/pilot-r10-T400-reag/slurm-pilot-r10-T400-reag-11760903.out",
+      "sha256": "35d8e6d46a3187be93791e94ea87e04e87f9d6d5dd9f0be6ecbe5dce82d30eb4",
+      "bytes": 1779,
+      "source_mtime": "2026-11-27T21:38:07+00:00"
+    }
+  ]
+}
