@@ -1,0 +1,135 @@
+{
+ "traj": "/scratch/acmes/davi.fileti/mlff-efficiency-studies/runs/rdf/alcl3_urea/run2r10m0/T450_r15_reag/eq.xyz",
+ "box_A": 20.550878,
+ "ureas": 32,
+ "partial_last_frame": false,
+ "frames": 201,
+ "frames_with_transfer": 1,
+ "first_transfer_frame": 192,
+ "max": {
+  "free": 19,
+  "al_O": 13,
+  "al_N": 7,
+  "al_NO": 0,
+  "normal": 32,
+  "tautomer": 0,
+  "ureate": 1,
+  "uronium": 1,
+  "h_on_O": 1,
+  "orphan_NO": 0,
+  "unbonded_H": 0
+ },
+ "first": {
+  "free": 15,
+  "al_O": 13,
+  "al_N": 4,
+  "al_NO": 0,
+  "normal": 32,
+  "tautomer": 0,
+  "ureate": 0,
+  "uronium": 0,
+  "h_on_O": 0,
+  "orphan_NO": 0,
+  "unbonded_H": 0
+ },
+ "last": {
+  "free": 17,
+  "al_O": 13,
+  "al_N": 2,
+  "al_NO": 0,
+  "normal": 32,
+  "tautomer": 0,
+  "ureate": 0,
+  "uronium": 0,
+  "h_on_O": 0,
+  "orphan_NO": 0,
+  "unbonded_H": 0
+ },
+ "blocks": [
+  {
+   "first_frame": 0,
+   "last_frame": 40,
+   "mean": {
+    "free": 16.170731707317074,
+    "al_O": 12.829268292682928,
+    "al_N": 3.0,
+    "al_NO": 0.0,
+    "normal": 32.0,
+    "tautomer": 0.0,
+    "ureate": 0.0,
+    "uronium": 0.0,
+    "h_on_O": 0.0,
+    "orphan_NO": 0.0,
+    "unbonded_H": 0.0
+   }
+  },
+  {
+   "first_frame": 41,
+   "last_frame": 80,
+   "mean": {
+    "free": 15.7,
+    "al_O": 12.875,
+    "al_N": 3.425,
+    "al_NO": 0.0,
+    "normal": 32.0,
+    "tautomer": 0.0,
+    "ureate": 0.0,
+    "uronium": 0.0,
+    "h_on_O": 0.0,
+    "orphan_NO": 0.0,
+    "unbonded_H": 0.0
+   }
+  },
+  {
+   "first_frame": 81,
+   "last_frame": 120,
+   "mean": {
+    "free": 15.975,
+    "al_O": 12.925,
+    "al_N": 3.1,
+    "al_NO": 0.0,
+    "normal": 32.0,
+    "tautomer": 0.0,
+    "ureate": 0.0,
+    "uronium": 0.0,
+    "h_on_O": 0.0,
+    "orphan_NO": 0.0,
+    "unbonded_H": 0.0
+   }
+  },
+  {
+   "first_frame": 121,
+   "last_frame": 160,
+   "mean": {
+    "free": 15.25,
+    "al_O": 12.975,
+    "al_N": 3.775,
+    "al_NO": 0.0,
+    "normal": 32.0,
+    "tautomer": 0.0,
+    "ureate": 0.0,
+    "uronium": 0.0,
+    "h_on_O": 0.0,
+    "orphan_NO": 0.0,
+    "unbonded_H": 0.0
+   }
+  },
+  {
+   "first_frame": 161,
+   "last_frame": 200,
+   "mean": {
+    "free": 16.625,
+    "al_O": 12.85,
+    "al_N": 2.525,
+    "al_NO": 0.0,
+    "normal": 31.95,
+    "tautomer": 0.0,
+    "ureate": 0.025,
+    "uronium": 0.025,
+    "h_on_O": 0.025,
+    "orphan_NO": 0.0,
+    "unbonded_H": 0.0
+   }
+  }
+ ]
+}

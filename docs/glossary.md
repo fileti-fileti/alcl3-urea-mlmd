@@ -32,7 +32,9 @@ One line per term.
 - **Status block**: the State / Now / Later / Waiting on owner section of `CLAUDE.md` (ADR-0011).
 - **Store**: `../alcl3-urea-mlmd-store/{data,runs,logs}`, outside git, reached through the `data`, `runs`, `logs` symlinks.
 - **Superseded run**: a prepared or finished run dir replaced by a new protocol, moved to `runs/_superseded/<run>-<commit>-<reason>`, never deleted.
+- **Target temperature**: 333 K, the production temperature of the project and the temperature of the experimental densities (ADR-0020).
 - **Thermostat check**: the test of what cools the N-H stretches under a global Bussi thermostat (`docs/experiments/thermostat-check-r10neut-T400.md`).
 - **Training density**: 1.5398 g/cm³ at r = 1.0 (L = 29.729979 Å for 1512 atoms), the density of the training data, of the AIMD and of the v2 boxes; every MLMD stage runs at it (ADR-0019).
 - **UA**: LNCC allocation unit: 1 per CPU core-hour, 100 per GPU-hour; the ledger counts a GPU job as cores + GPUs (ADR-0017).
+- **Urea scan**: `src/urea_scan.py`; per frame, the ureas free / Al-O / Al-N / Al-NO and normal / tautomer (4 H, one or more on O) / ureate / uronium, with the census radii.
 - **Urea proton transfer**: an H moves from an Al-bound urea, which becomes a ureate (3 H, bound to Al through N and O), to the O of a free urea, which becomes a uronium (5 H); H counted with the census radii (N-H, O-H < 1.37 Å). Seen only in starts with free urea (journal 2026-11-28).

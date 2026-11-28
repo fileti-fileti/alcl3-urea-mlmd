@@ -1,0 +1,64 @@
+{
+  "name": "valid-reactive-check-2026-11-28",
+  "registered_at": "2026-11-28T12:32:56+00:00",
+  "machine": "sdumont",
+  "hostname": "sdumont18",
+  "repo_commit": "5881c32b6e8f646bdedb8b1ea508bbd7d6fe6704",
+  "source_dir": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check",
+  "patterns": [
+    "check.py",
+    "run.log",
+    "out/*.csv"
+  ],
+  "files": [
+    {
+      "path": "check.py",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/check.py",
+      "sha256": "f24298a5ff998b6e215bc929dd4f13b6e3c8b0ec2be11e15cfab7b992552cc36",
+      "bytes": 2614,
+      "source_mtime": "2026-11-28T11:53:49+00:00"
+    },
+    {
+      "path": "out/chunk0.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/out/chunk0.csv",
+      "sha256": "4daf829428601547c7b35cce22d13b0334ba7e673e4e68014c1ce12faeeaf2e4",
+      "bytes": 2366,
+      "source_mtime": "2026-11-28T11:57:10+00:00"
+    },
+    {
+      "path": "out/chunk1.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/out/chunk1.csv",
+      "sha256": "cd4228aab7de4ba6fe34edc686996012ce20c8989f49cd9757c512ae4148ef8a",
+      "bytes": 2484,
+      "source_mtime": "2026-11-28T11:57:06+00:00"
+    },
+    {
+      "path": "out/chunk2.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/out/chunk2.csv",
+      "sha256": "49cc5b881eca8021352dfea14b4b080961b64f7498e67583fb3a74120af70207",
+      "bytes": 2422,
+      "source_mtime": "2026-11-28T11:56:47+00:00"
+    },
+    {
+      "path": "out/chunk3.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/out/chunk3.csv",
+      "sha256": "4fd8a5a563c149643cb67d9aa91fa33125112d64013d1d3e5d385784461039eb",
+      "bytes": 2471,
+      "source_mtime": "2026-11-28T11:57:22+00:00"
+    },
+    {
+      "path": "out/chunk4.csv",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/out/chunk4.csv",
+      "sha256": "216749bff9cda99ac6709789399b0122190556a63ead1f94197b5263e4fcafd0",
+      "bytes": 2351,
+      "source_mtime": "2026-11-28T11:56:44+00:00"
+    },
+    {
+      "path": "run.log",
+      "source": "/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd-store/runs/valid-reactive-check/run.log",
+      "sha256": "7fe4e2155bca49c02ce8d9a83b499ffa0605c7feb8540fea629024c8f53505aa",
+      "bytes": 4912,
+      "source_mtime": "2026-11-28T11:57:23+00:00"
+    }
+  ]
+}

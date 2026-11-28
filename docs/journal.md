@@ -14,6 +14,63 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-28 — sdumont — Neutral start submitted; urea scan; target temperature 333 K (ADR-0020)
+- Goal: take in the neutral box, make the urea count a tested tool, trace the proton transfer
+  through the training data, settle the temperature.
+- Done:
+  - Neutral box from neumann (`docs/handoffs/2026-11-28-neumann-neutro-box.md`): tarball sha256
+    `6a919bab…` checked on the owner's Mac and here, PDB `1a2291b7…` = MANIFEST = handoff;
+    extracted read-only to `data/boxes/mlmd-boxes-r1.0-neutro-v2/`; inbox `SHA256SUMS` line.
+  - Config `pilot-r10-T400-nvt-neut.json` (seed 3), pilot doc for three starts, CLAUDE.md boxes
+    line (`984537c`); `runs/pilot-r10-T400-neut` prepared at `984537c`; job 11761928
+    submitted (PENDING at the end of the session).
+  - `src/urea_scan.py` + 5 tests (`5881c32`); 87 tests OK with the login python3 and the venv.
+  - Scan of 125 trajectories (pilot, superseded, setup check, Davi's AIMD copy, Davi's MLMD)
+    and of the 44 available start structures of the 15 AIMD compositions:
+    `results/urea-scan-2026-11-28` (344 files, `--check` OK).
+  - m0 against the DFT labels of the 138 round-10 validation frames:
+    `results/valid-reactive-check-2026-11-28` (7 files, `--check` OK).
+  - ADR-0020; request for the 333 K AIMD (`docs/handoffs/2026-11-28-request-neumann-aimd-333K.md`).
+- Results (exploration, no claim):
+  - Neutral box: census 126 × AlCl3(ur); neumann contacts PASS; min distance 1.018 Å (N-H);
+    CPU single point (float64) E/atom −206.9495 eV, max |F| 2.71 eV/Å (reagentes −206.8460,
+    4.05; ionico −206.9075, 3.02).
+  - Urea scan: no trajectory with at most one free urea has a transfer; every reag start at
+    400 and 450 K has one (AIMD, Davi's MLMD, our MLMD); r10_fora has 10–11 free ureas but a
+    transfer in 2 AIMD frames only: free urea is necessary, not sufficient. Pilot reag prod:
+    19 776 of 20 001 frames, up to 6 ureates and 6 uroniums, free ureas 80 → 36; ion: none.
+  - Start structures: only r13_reag has a transfer, born at step 201 of its GEO_OPT (99 of 300
+    frames) and kept in its AIMD start; all others clean. Our reag `eq`: transient transfers
+    from frame 11 (4 of 41 frames); prod frame 0 clean.
+  - AIMD design (dataset report 2.4): 333 K only ion/ionA/ionB/mist (8 runs), 400 K all 15,
+    450 K reag/neut/fora (7); same `init.xyz` per seed at every temperature. Train + valid
+    frames 431 / 501 / 421 (333 / 400 / 450 K); with ≥ 2 free ureas 0 / 163 / 320; with
+    transfer 0 / 132 / 168. Active learning: 1 walker per (T, r), 20 ps, started "from any
+    speciation there", 12 labels per system and round, 10 rounds (`configs/al/alcl3_al.yaml`).
+  - m0 on validation frames (no transfer / transfer): |ΔE| 0.30 / 0.38 meV/atom; force RMSE
+    (RMS over frames) 32.4 / 42.6 meV/Å; H on N 24.1 / 31.1; H on O 80.2 meV/Å (27 frames,
+    28–225). No 333 K frame with a transfer.
+  - 333 K in Carrasco-Busturia 2021 is the temperature of the density used (Liu 2017); their
+    runs are at 300 K.
+- Decisions (owner, 2026-11-28; verbatim in the docs named):
+  - Neutral start as third start (pilot doc); submit it ("ok, submete o neutro").
+  - Urea scan into `src/` and run ("segue com a copia e com o scan"); register both analyses
+    and rerun the start-structure check with a manifest.
+  - ADR-0020: target 333 K; seven AIMD at 333 K on neumann with PBE-D3 and r13_reag as it is;
+    hybrid check in parallel; 333 K weight on the training side; m0 for exploration only.
+  - 450 K ionic seeds: optional, later (owner's "ok" read as approval of the recommendation).
+- Problems:
+  - `~/.bashrc` (lines 97–102) puts `mace_env/lib` first in `LD_LIBRARY_PATH`: on the login
+    node the module python loads the conda libpython and torch fails ("failed to parse
+    CPython sys.version"). Jobs are not affected (`--export=NONE`, no `$HOME`). Workaround:
+    `env -i HOME=<empty> bash -l` + `module load`. The file is the owner's; not changed.
+  - `01_geo/r15_ionB` has no packed `init.xyz` (manifest row marked MISSING); the r10_reag
+    GEO_OPT stopped at 300 steps without "OPTIMIZATION COMPLETED".
+  - Liu et al. 2017 not found online: its temperature range is unknown.
+  - The session ran about two hours of decisions before this log.
+- Next: neutro job (start checks; at the end, urea scan of its prod and ledger); the owner sends
+  the 333 K AIMD request; item 2 choices, then the request to Davi.
+
 ## 2026-11-28 — sdumont — Carrasco-Busturia 2021 read; neutral start box requested
 - Goal: read the AIMD paper the owner supplied and follow up on a neutral start for the pilot.
 - Done:

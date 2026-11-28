@@ -1,0 +1,5 @@
+start 2026-11-28T09:32:04-03:00 commit 5881c32b6e8f646bdedb8b1ea508bbd7d6fe6704
+sha256sum: /scratch/acmes/eudes.fileti3/projects/alcl3_urea_data/01_geo/r15_ionB/init.xyz: No such file or directory
+FAILED r15_ionB.packed
+end 2026-11-28T09:32:21-03:00; json: 44
+note: r15_ionB.packed skipped, 01_geo/r15_ionB has no init.xyz (only geo out, pos, wfn)

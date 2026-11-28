@@ -8,7 +8,8 @@ conventions only. Keep it under ~160 lines; history goes to `docs/journal.md`.
 - **alcl3-urea-mlmd**: MLMD of AlCl3:urea liquids on SDumont with a ready MACE model, for
   the Al speciation in 1512-atom boxes at r = 1.0, 1.3, 1.5 (r = AlCl3:urea molar ratio);
   equilibrium is judged by two opposite starts (molecular, ionic) reaching the same
-  speciation (owner, 2026-11-24). TODO(owner): confirm this as the research question.
+  speciation (owner, 2026-11-24); neutral start added 2026-11-28; target temperature 333 K
+  (ADR-0020). TODO(owner): confirm this as the research question.
   Out of scope: dataset generation, DFT labelling, training.
 - Three sites (ADR-0015):
   - neumann, project `alcl3-urea` (owner): AIMD, dataset and its DFT labels, MLMD start
@@ -156,33 +157,33 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
 ## Status
 <!-- BEGIN STATUS -->
 - Updated: 2026-11-28 — sdumont
-- State: on SDumont and GitHub; model run2r10m0, boxes v2, setup-check start in the store (sha256
-  checked); env `mace0316_env`, 82 tests pass with it; engine ASE (LAMMPS benchmark: no);
-  thermostat `massive_ou` (ADR-0018); NVT at 1.5398 g/cm³, no NPT (ADR-0019); pilot phase 1
-  done (jobs 11760903 reag, 11760904 ion; commit 45ca01d; `results/pilot-r10-t400-phase1-*`);
-  urea proton transfer in the reag start, also in the AIMD reag runs (journal 2026-11-28); neutral
-  start box requested from neumann; no claims.
+- State: on SDumont and GitHub; model run2r10m0 (exploration only since ADR-0020: target 333 K,
+  training to be reformulated); boxes v2 + neutro; env `mace0316_env`; engine ASE; `massive_ou`
+  NVT at 1.5398 g/cm³ (ADR-0018/0019); pilot 400 K: reag and ion done, neutro job 11761928 pending
+  (commit 984537c); `src/urea_scan.py` (results `urea-scan-2026-11-28`); no claims.
 - Now (SDumont):
-  - Urea H-count scan into `src/` + test (diff first); register its outputs (our runs, AIMD copy, Davi's MLMD).
-  - Register the setup check, thermostat check and LAMMPS benchmark outputs once the owner names the globs.
+  - Neutro job 11761928: at start, model sha256 and `eq` end; at the end, urea scan of its prod (no transfer expected without free urea), ledger, energy against reag and ion.
+  - Item 2 of ADR-0020 (333 K weight in training): the owner's and Davi's choices, then the request to Davi.
 - Later:
+  - Hybrid-functional check of the proton-transfer energy (neumann; ADR-0020 item 2): draft the request.
+  - 333 K equilibration protocol (experiment doc) once the new model exists; reading rule + ID-1 after it.
   - `docs/model.md`: 1.5398 g/cm³ is extrapolated (Carrasco-Busturia 2021 from Liu et al. 2017), not measured (diff first).
   - `bond_width.py`: report pairs beyond the cut apart and the std of intact pairs (+ test).
-  - Pilot phase 2: reading rule (counts free urea, ureate, uronium) + pending claim ID-1, then `prod2` (pilot doc).
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
   - Backup of the model, boxes and setup-check start outside `/scratch` (60-day purge).
-  - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
-  - GROMACS NNPot for production: evaluate once the collaborator's numbers and wrapper arrive (new ADR if adopted).
+  - 450 K AIMD for the ion/ionA/ionB/mist seeds (optional, factorial design).
+  - Production matrix at 333 K (r = 1.0, 1.3, 1.5; starts); GROMACS NNPot once the collaborator's numbers arrive.
 - Waiting on owner:
-  - Neutral start: 1512-atom box from neumann (request drafted 2026-11-28); third start or a replacement? Research-question line changes.
-  - Proton transfer: real or PBE-D3? Carrasco-Busturia 2021 is silent; ask the authors about their dropped 1:1 seeds?; dataset idea (agent advised against); census on neumann AIMD and DFT single points on hold.
-  - Committee check (Davi's round-10 `m1_stagetwo`/`m2_stagetwo` vs m0 on our reag frames, σ against Davi's MLMD): ADR-0015 says "no committee"; ok for a new ADR allowing one-off committee diagnostics?
-  - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`) and the first phase-1 files ADR-0019 cites (`runs/_superseded/pilot-r10-T400-*`).
-  - ADR-0019 TODOs: DFT stress on a few AIMD frames (neumann); density at r = 1.0 and 400 K (Liu et al., J. Mol. Liq. 247, 57, 2017?).
+  - Send `docs/handoffs/2026-11-28-request-neumann-aimd-333K.md` to neumann; cost of one AIMD and of one 1000 Ry label.
+  - Item 2 choices: label ratio 333:400:450 (proposal 2:1:1), frames per 333 K AIMD (~20), loss weights (proposal no), acceptance limits per category at 333 K, retrain from scratch (proposal) or fine-tune.
+  - Experiments at 333 K for the paper (speciation: Raman, NMR?); is r = 1.0 liquid at room temperature?
+  - Committee check (`m1/m2_stagetwo` vs m0): ADR-0015 says "no committee"; ok for an ADR allowing one-off diagnostics?
+  - Globs for the setup check, thermostat check, LAMMPS benchmark and the first phase-1 files ADR-0019 cites.
+  - ADR-0019 TODO: DFT stress on a few AIMD frames (neumann).
+  - `~/.bashrc` lines 97–102 (`mace_env/lib` first in `LD_LIBRARY_PATH`) break the venv on the login node: scope them to LAMMPS?
   - GROMACS NNPot from the collaborator: model (MACE? size), atoms, GPU, ns/day; export script/wrapper; version and build recipe.
-  - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it); does it classify ureate and uronium?
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-28, end-of-session commit on top of ea81e31
+- Last sync — sdumont: 2026-11-28, end-of-session commit on top of 5881c32
 <!-- END STATUS -->

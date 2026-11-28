@@ -30,6 +30,7 @@ this project.
 | [0017](0017-sdumont-cost-unit-ua.md) | SDumont cost unit: UA from sacct | Accepted |
 | [0018](0018-per-dof-thermostat.md) | One thermostat per degree of freedom (massive_ou) for MLMD | Accepted; NPT stage superseded by 0019 |
 | [0019](0019-nvt-at-training-density.md) | NVT at the training density for both starts; no NPT stage | Accepted |
+| [0020](0020-target-temperature-333K.md) | Target temperature 333 K; training to cover it with priority | Accepted |
 
 ## Template
 

@@ -1,0 +1,32 @@
+commit 5881c32 dirty=0 valid_sha256 68842127e33054ee0dedce60f7511a1075faff29b36e1e0d5df1f1f38830b3ba model_sha256 ff0e4578c01c
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/e3nn/o3/_wigner.py:10: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  _Jd, _W3j_flat, _W3j_indices = torch.load(os.path.join(os.path.dirname(__file__), 'constants.pt'))
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+/scratch/acmes/eudes.fileti3/projects/shared/envs/mace0316_env/lib/python3.10/site-packages/mace/calculators/mace.py:226: UserWarning: Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected, since the`weights_only` argument was not explicitly passed to `torch.load`, forcing weights_only=False.
+  torch.load(f=model_path, map_location=device)
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/runs/valid-reactive-check/out/chunk4.csv 26 frames
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/runs/valid-reactive-check/out/chunk2.csv 28 frames
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/runs/valid-reactive-check/out/chunk1.csv 28 frames
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/runs/valid-reactive-check/out/chunk0.csv 28 frames
+cuequivariance or cuequivariance_torch is not available. Cuequivariance acceleration will be disabled.
+/scratch/acmes/eudes.fileti3/projects/alcl3-urea-mlmd/runs/valid-reactive-check/out/chunk3.csv 28 frames
+done

@@ -5,7 +5,10 @@ Status: phase-1 rerun under ADR-0019 (NVT at 1.5398 g/cm³, no NPT; owner's ok
 (jobs 11759186, 11759187, with NPT) is superseded: see First phase 1.
 Neutral start added 2026-11-28 (owner: "vamos tentar 2"; third start, reag and ion kept:
 owner's "Ok" to this change, 2026-11-28), box from neumann
-(`docs/handoffs/2026-11-28-neumann-neutro-box.md`); its phase 1 runs alone.
+(`docs/handoffs/2026-11-28-neumann-neutro-box.md`); its phase 1 runs alone (job 11761928).
+Since ADR-0020 (2026-11-28) the target temperature is 333 K and run2r10m0 is an exploration
+model: this 400 K pilot continues as exploration only; phase 2 waits for the new model and a
+333 K protocol.
 Draft written 2026-11-24 by the agent. Phase 1 (below) approved by the owner
 2026-11-24 ("ok"); it is submitted after the setup check passes. The reading rule is fixed
 after phase 1 and before phase 2 runs, and the pending claim ID-1 enters `docs/claims.md`
