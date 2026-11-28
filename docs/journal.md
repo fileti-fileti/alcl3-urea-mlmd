@@ -14,6 +14,55 @@ Title: `## YYYY-MM-DD — <machine> — <short title>`.
 ```
 
 <!-- NEW ENTRIES BELOW -->
+## 2026-11-28 — sdumont — Carrasco-Busturia 2021 read; neutral start box requested
+- Goal: read the AIMD paper the owner supplied and follow up on a neutral start for the pilot.
+- Done:
+  - Read Carrasco-Busturia et al., ChemSusChem 14, 2034–2041 (2021), doi:10.1002/cssc.202100163
+    (PDF from the owner, not stored in the repo).
+  - Densities of the AIMD boxes from the composition and L in Davi's AIMD `manifest.csv`.
+  - Mean potential energy of the two phase-1 runs from `prod.thermo.csv` (store only).
+  - Searched for a 1512-atom neutral box (repo, store, legacy `alcl3_urea_data`, Davi's
+    `data/`): none. Only the 432-atom AIMD seed r10_neut exists
+    (`data/setup-check/r10_neut.T400.init.xyz`, legacy `01_geo/r10_neut`).
+  - Census (scratch script, neumann criterion) of that seed: 33 × AlCl3(ur) + 1 × Al3Cl9(ur)3;
+    AIMD T400 r10_neut frame 1000: 36 × AlCl3(ur). The script gave 63 + 63 on the v2 ionico box.
+  - Drafted the box request for neumann (chat): `r1.0_neutro.pdb`, 126 × [AlCl3(urea)],
+    1512 atoms, L = 29.729979 Å, the v2 recipe (Packmol, contacts check, MANIFEST with sha256).
+- Results:
+  - Paper: VASP, PBE + vdW-DF (Langreth–Lundqvist), 400 eV, Γ, NVT Nosé–Hoover, dt 1 fs;
+    168–224 atoms; 1.5:1 and 1:1; 1000 K, then 300 K; 120–161 ps.
+    - No mention of protons, N-H or HCl; the final speciation (Table 2) lists only species with
+      intact urea. The 1:1 reactants approach was dropped ("all three random seeds
+      investigated yielded chemically unstable species", not described); several 1.5:1
+      reactant seeds were dropped for "chemically unstable chloroaluminate clusters".
+    - Census criterion identical to ours (radii, Cl only to Al); code
+      github.com/DavidCdeB/ChemReact.
+    - 1.5398 g/cm³ for 1:1 is an extrapolation of the 1.2–1.5:1 densities of Liu et al.,
+      J. Mol. Liq. 247, 57 (2017); 1.5921 g/cm³ for 1.5:1 is measured (333 K).
+    - 1:1: neutral [AlCl3(ur)] (P4) below ionic [AlCl2(ur)2]+ + [AlCl4]- (P5), 0.311 against
+      0.338 eV per urea (their Eq. 10); neither reacts in about 120 ps.
+    - Two reactant starts (R1, R2, 1.5:1) ended at different compositions with flat last
+      20 ps; the authors say convergence needs "well beyond nanoseconds".
+  - AIMD box densities: r10 1.5399 (the extrapolation), r15 1.5922 (Liu, measured), r13
+    1.5711 g/cm³ (source not checked).
+  - Phase 1, mean potential energy reag − ion: +34.12 eV (100–150 ps), +32.25 eV
+    (150–200 ps) = 255.9 meV per urea, 21.33 meV/atom; reag still falling (−1.84 eV between
+    the blocks), ion flat. Model test energy error: 0.55 meV/atom (`docs/model.md`).
+- Decisions:
+  - Owner 2026-11-28: "vamos tentar 2", a neutral [AlCl3(urea)] start for the pilot. The owner
+    expected a box ("Acho que já temos a caixa 1.1"); only the 432-atom seed exists. The agent
+    recommended a 1512-atom box from neumann with the v2 recipe, rather than the 432-atom seed
+    (other size) or a 2×2×2 replica (3456 atoms). Owner's answer pending, as is whether the
+    neutral start is a third start or replaces one.
+- Problems:
+  - The scratch scripts of the previous session were in sdumont17's `/tmp`; this session ran
+    on sdumont18, where they are not visible (the scratchpad is node-local).
+  - 1.5398 g/cm³ is an extrapolation, not a measurement; ADR-0019 and the neumann handoff call
+    it "experimental".
+- Next: the owner takes the box request to neumann; when the box arrives: inbox + sha256, a
+  line in the pilot doc, config `pilot-r10-T400-nvt-neut.json` (seed 3), `prep_mlmd.py`, ask
+  before submitting; note the density origin in `docs/model.md` (diff first).
+
 ## 2026-11-28 — sdumont — Pilot phase 1 done; urea proton transfer in the reag start, also in the AIMD
 - Goal: check the phase-1 rerun, the N-H spread, and the cause of the broken N-H pairs.
 - Done:

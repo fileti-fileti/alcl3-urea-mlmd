@@ -19,6 +19,7 @@ One line per term.
 - **massive_ou / nve**: stage kinds of `src/mlmd.py`: one Ornstein-Uhlenbeck thermostat per degree of freedom (Davi's massive CSVR), and velocity Verlet without thermostat.
 - **MLMD**: molecular dynamics driven by a machine-learned force field (here MACE).
 - **N-H spread**: standard deviation of the N-H bond lengths per block of frames (`src/bond_width.py`); a thermometer for the N-H stretches (classical value at 400 K ≈ 0.029 Å from the model's curvature).
+- **Neutral start (neutro)**: an r = 1.0 start of neutral adducts [AlCl3(urea)] (urea O-bound), as the AIMD seed r10_neut and model P4 of Carrasco-Busturia et al. 2021; no 1512-atom box yet (journal 2026-11-28).
 - **NPT relaxation**: short NPT stage that only brings the start-box pressure to plausible values; not a measurement (ADR-0016). Superseded by ADR-0019: no NPT stage.
 - **Pilot phases**: phase 1 = the first 200 ps of production, exploration, never judged; phase 2 = its extension (`prod2`), judged by the reading rule fixed between the phases (`docs/experiments/pilot-r10-T400.md`).
 - **r**: AlCl3:urea molar ratio (r = 1.3: 39 Al per 30 urea in the AIMD seed).

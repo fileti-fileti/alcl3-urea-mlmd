@@ -159,11 +159,13 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
   checked); env `mace0316_env`, 82 tests pass with it; engine ASE (LAMMPS benchmark: no);
   thermostat `massive_ou` (ADR-0018); NVT at 1.5398 g/cm³, no NPT (ADR-0019); pilot phase 1
   done (jobs 11760903 reag, 11760904 ion; commit 45ca01d; `results/pilot-r10-t400-phase1-*`);
-  urea proton transfer in the reag start, also in the AIMD reag runs (journal 2026-11-28); no claims.
+  urea proton transfer in the reag start, also in the AIMD reag runs (journal 2026-11-28); neutral
+  start box requested from neumann; no claims.
 - Now (SDumont):
   - Urea H-count scan into `src/` + test (diff first); register its outputs (our runs, AIMD copy, Davi's MLMD).
   - Register the setup check, thermostat check and LAMMPS benchmark outputs once the owner names the globs.
 - Later:
+  - `docs/model.md`: 1.5398 g/cm³ is extrapolated (Carrasco-Busturia 2021 from Liu et al. 2017), not measured (diff first).
   - `bond_width.py`: report pairs beyond the cut apart and the std of intact pairs (+ test).
   - Pilot phase 2: reading rule (counts free urea, ureate, uronium) + pending claim ID-1, then `prod2` (pilot doc).
   - Census: `extract_species.py` (sha256) into `src/` + a test reproducing a neumann census on one AIMD frame.
@@ -171,14 +173,15 @@ A finished task leaves the block and goes to the journal entry (Done or Problems
   - Production matrix (r = 1.0, 1.3, 1.5; starts; T) sized by the pilot; boxes for r = 1.3, 1.5 from neumann.
   - GROMACS NNPot for production: evaluate once the collaborator's numbers and wrapper arrive (new ADR if adopted).
 - Waiting on owner:
-  - Proton transfer: real or PBE-D3? Full text of Carrasco-Busturia et al. 2021 (doi:10.1002/cssc.202100163, paywalled); dataset idea (agent advised against); census on neumann AIMD and DFT single points on hold.
+  - Neutral start: 1512-atom box from neumann (request drafted 2026-11-28); third start or a replacement? Research-question line changes.
+  - Proton transfer: real or PBE-D3? Carrasco-Busturia 2021 is silent; ask the authors about their dropped 1:1 seeds?; dataset idea (agent advised against); census on neumann AIMD and DFT single points on hold.
   - Committee check (Davi's round-10 `m1_stagetwo`/`m2_stagetwo` vs m0 on our reag frames, σ against Davi's MLMD): ADR-0015 says "no committee"; ok for a new ADR allowing one-off committee diagnostics?
   - Globs to register for the three checks (proposal: `rdf/*`, `*.bond_width.json`, `*.thermo.csv`, `mlmd.log`, `report.json`) and the first phase-1 files ADR-0019 cites (`runs/_superseded/pilot-r10-T400-*`).
-  - ADR-0019 TODOs: DFT stress on a few AIMD frames (neumann); measured density at r = 1.0 and 400 K.
+  - ADR-0019 TODOs: DFT stress on a few AIMD frames (neumann); density at r = 1.0 and 400 K (Liu et al., J. Mol. Liq. 247, 57, 2017?).
   - GROMACS NNPot from the collaborator: model (MACE? size), atoms, GPU, ns/day; export script/wrapper; version and build recipe.
   - Pilot reading rule after phase 1: census quantity, window W, block length, maximum length.
   - `extract_species.py` from neumann (`git ls-files` in alcl3-urea finds it); does it classify ureate and uronium?
   - Backup location outside `/scratch` (e.g. `$HOME`): ok to copy ~20 MB there.
   - UA of GPU jobs: does LNCC bill the CPU cores on top of the GPU? (ADR-0017 counts both until known.)
-- Last sync — sdumont: 2026-11-28, end-of-session commit on top of c33e958
+- Last sync — sdumont: 2026-11-28, end-of-session commit on top of ea81e31
 <!-- END STATUS -->
